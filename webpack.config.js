@@ -16,6 +16,10 @@ module.exports = {
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.jpg/,
+                type: 'asset/resource'
+            }
         ],
     },
     devtool: 'inline-source-map',
@@ -23,7 +27,7 @@ module.exports = {
         extensions: ['.ts', '.js'],
     },
     devServer: {
-        contentBase: './dist'
+        contentBase: [path.join(__dirname, 'src'), path.join(__dirname, 'public')]
     },
     plugins: [
         new CleanWebpackPlugin(),
