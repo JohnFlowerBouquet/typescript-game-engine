@@ -36,4 +36,8 @@ export default class SpriteSheet {
         }
         context.drawImage(buffer, x, y);
     }
+
+    public drawTile(name: string, context: CanvasRenderingContext2D, x: number, y: number): void {
+        this.draw(name, context, x * this.width, y * this.height);
+    }
 }

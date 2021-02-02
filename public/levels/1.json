@@ -1,0 +1,10 @@
+{
+    "map": [
+        ["kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone"],
+        ["wall1b","wall1b","wall1b","wall1b","wall1b","wall1b","wall1b","wall1b","wall1b","wall1b"],
+        ["wall1a","wall1a","wall1a","wall1a","wall1a","wall1a","wall1a","wall1a","wall1a","wall1a"],
+        ["pavement","pavement","pavement","pavement","pavement","pavement","pavement","pavement","pavement","pavement"],
+        ["kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone","kerbstone"],
+        ["block","block","block","block","block","block","block","block","block","block"]
+    ]
+}
