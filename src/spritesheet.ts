@@ -1,6 +1,8 @@
 export default class SpriteSheet {
     public tiles = new Map<string, HTMLCanvasElement>();
     public animations = new Map<string, Animation>();
+
+    private readonly topPadding = 3;
     constructor(
         public image: HTMLImageElement,
         public width: number,
@@ -38,6 +40,12 @@ export default class SpriteSheet {
     }
 
     public drawTile(name: string, context: CanvasRenderingContext2D, x: number, y: number): void {
-        this.draw(name, context, x * this.width, y * this.height);
+        this.draw(name, context, x * this.width, y * this.height + this.topPadding);
+    }
+
+    public drawTopKerbstone(context: CanvasRenderingContext2D, tilesCount: number): void {
+        for (let i = 0; i < tilesCount; i++) {
+            this.draw("kerbstone", context, i * this.width, 0);
+        }
     }
 }
