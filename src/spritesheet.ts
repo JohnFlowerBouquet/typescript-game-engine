@@ -2,7 +2,6 @@ export default class SpriteSheet {
     public tiles = new Map<string, HTMLCanvasElement>();
     public animations = new Map<string, Animation>();
 
-    private readonly topPadding = 3;
     constructor(
         public image: HTMLImageElement,
         public width: number,
@@ -12,18 +11,28 @@ export default class SpriteSheet {
     public define(
         name: string,
         x: number,
-        y: number
+        y: number,
+        width: number,
+        height: number
     ) {
         const buffer = document.createElement("canvas");
         const context = buffer.getContext("2d");
-        buffer.width = this.width;
-        buffer.height = this.height;
+        buffer.width = width;
+        buffer.height = height;
         if (!context) {
             throw new Error(`SpriteSheet.draw(): Sprite "${name}" not found`);
         }
-        context.drawImage(this.image, x, y, this.width, this.height, 0, 0, this.width, this.height);
+        context.drawImage(this.image, x, y, width, height, 0, 0, width, height);
 
         this.tiles.set(name, buffer);
+    }
+
+    public defineTile(
+        name: string,
+        x: number,
+        y: number
+    ) {
+        this.define(name, x, y, this.width, this.height);
     }
 
     public draw(
@@ -40,12 +49,12 @@ export default class SpriteSheet {
     }
 
     public drawTile(name: string, context: CanvasRenderingContext2D, x: number, y: number): void {
-        this.draw(name, context, x * this.width, y * this.height + this.topPadding);
+        this.draw(name, context, x * this.width, y * this.height);
     }
 
     public drawTopKerbstone(context: CanvasRenderingContext2D, tilesCount: number): void {
         for (let i = 0; i < tilesCount; i++) {
-            this.draw("kerbstone", context, i * this.width, 0);
+            this.drawTile("kerbstone", context, i, 0);
         }
     }
 }
