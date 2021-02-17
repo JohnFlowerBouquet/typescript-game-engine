@@ -1,9 +1,9 @@
 import Compositor from "./Compositor";
-import { Position } from "./interface";
-import { createBackgroundLayer } from "./layers";
+import { createBackgroundLayer, createSpriteLayer } from "./layers";
 import { loadLevel } from "./loaders";
-import { loadBackgroundSprites, loadPrinceSprite } from "./sprites";
-import SpriteSheet from "./spritesheet";
+import { loadBackgroundSprites } from "./sprites";
+import Timer from "./Timer";
+import { createPrince } from "./utilities";
 
 export const CANVAS_WIDTH = 720;
 export const CANVAS_HEIGHT = 480;
@@ -19,40 +19,29 @@ function createCanvas() {
   }
 
   Promise.all([
-    loadPrinceSprite(),
+    createPrince(),
     loadBackgroundSprites(),
     loadLevel('1'),
-  ]).then(([princeSprite, backgroundSprites, level]) => {
+  ]).then(([prince, backgroundSprites, level]) => {
     const compositor = new Compositor();
     const backgroundLayer = createBackgroundLayer(level.map, backgroundSprites);
     compositor.addLayer(backgroundLayer);
     
-    const pos = {
-      x: 150,
-      y: 35
-    };
+    const gravity = 0.6;
 
-    const spriteLayer = createSpriteLayer(princeSprite, pos);
+    const spriteLayer = createSpriteLayer(prince);
     compositor.addLayer(spriteLayer);
 
-    function update(): void {
-      if (!context) {
-        throw new Error(`SpriteSheet.draw(): Sprite not found`);
-      }
+    const timer = new Timer();
+    timer.updateFunction = (deltaTime) => {
       compositor.draw(context);
-      pos.x += 2;
-      pos.y += 2;
-      requestAnimationFrame(update)
+      prince.update(deltaTime);
+      prince.velocity.y += gravity;
     }
 
-    update();
-    
+    timer.start();
   })
   return canvas;
-}
-
-function createSpriteLayer(sprite: SpriteSheet, pos: Position): (context: CanvasRenderingContext2D) => void {
-  return (context: CanvasRenderingContext2D) => sprite.draw('prince', context, pos.x, pos.y);
 }
 
 document.body.appendChild(createCanvas());

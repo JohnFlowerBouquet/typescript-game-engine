@@ -1,3 +1,4 @@
+import Entity from "./Entity";
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./index";
 import { LevelMapRow } from "./interface";
 import SpriteSheet from "./spritesheet";
@@ -18,4 +19,8 @@ export function createBackgroundLayer(map: LevelMapRow[], sprites: SpriteSheet):
     });
   
     return (context: CanvasRenderingContext2D) => context.drawImage(buffer, 0, 0);
-  }
+}
+
+export function createSpriteLayer(entity: Entity): (context: CanvasRenderingContext2D) => void {
+  return (context: CanvasRenderingContext2D) => entity.draw(context);
+}
