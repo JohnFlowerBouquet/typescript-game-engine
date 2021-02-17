@@ -1,4 +1,5 @@
 import Compositor from "./Compositor";
+import Keyboard from "./KeyboardState";
 import { createBackgroundLayer, createSpriteLayer } from "./layers";
 import { loadLevel } from "./loaders";
 import { loadBackgroundSprites } from "./sprites";
@@ -27,16 +28,26 @@ function createCanvas() {
     const backgroundLayer = createBackgroundLayer(level.map, backgroundSprites);
     compositor.addLayer(backgroundLayer);
     
-    const gravity = 0.6;
+    const gravity = 500;
+
+    const input = new Keyboard();
+    input.addMaping("Space", keyState => {
+      if (keyState) {
+        prince.trait("jump").start();
+      } else {
+        prince.trait("jump").cancel();
+      }
+    })
+    input.listenTo();
 
     const spriteLayer = createSpriteLayer(prince);
     compositor.addLayer(spriteLayer);
 
     const timer = new Timer();
     timer.updateFunction = (deltaTime) => {
-      compositor.draw(context);
       prince.update(deltaTime);
-      prince.velocity.y += gravity;
+      compositor.draw(context);
+      prince.velocity.y += gravity * deltaTime;
     }
 
     timer.start();
