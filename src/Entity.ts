@@ -32,11 +32,6 @@ export default class Entity {
       this.spriteSheet = spriteSheet;
       this.traits = new Map();
     }
-  
-    // public update(deltaTime: number): void {
-    //   this.position.x += this.velocity.x * deltaTime;
-    //   this.position.y += this.velocity.y * deltaTime;
-    // }
 
     public trait(traitName: string): Trait {
       const trait = this.traits.get(traitName);

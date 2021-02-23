@@ -1,8 +1,5 @@
-import Compositor from "./Compositor";
 import Keyboard from "./KeyboardState";
-import { createBackgroundLayer, createSpriteLayer } from "./layers";
 import { loadLevel } from "./loaders";
-import { loadBackgroundSprites } from "./sprites";
 import Timer from "./Timer";
 import { createPrince } from "./utilities";
 
@@ -21,14 +18,10 @@ function createCanvas() {
 
   Promise.all([
     createPrince(),
-    loadBackgroundSprites(),
     loadLevel('1'),
-  ]).then(([prince, backgroundSprites, level]) => {
-    const compositor = new Compositor();
-    const backgroundLayer = createBackgroundLayer(level.map, backgroundSprites);
-    compositor.addLayer(backgroundLayer);
-    
+  ]).then(([prince, level]) => {    
     const gravity = 500;
+    level.entities.add(prince);
 
     const input = new Keyboard();
     input.addMaping("Space", keyState => {
@@ -40,13 +33,10 @@ function createCanvas() {
     })
     input.listenTo();
 
-    const spriteLayer = createSpriteLayer(prince);
-    compositor.addLayer(spriteLayer);
-
     const timer = new Timer();
     timer.updateFunction = (deltaTime) => {
-      prince.update(deltaTime);
-      compositor.draw(context);
+      level.update(deltaTime);
+      level.compositor.draw(context);
       prince.velocity.y += gravity * deltaTime;
     }
 
