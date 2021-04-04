@@ -11,7 +11,7 @@ export class Trait {
     //
   }
 
-  public start(): void {
+  public start(params?: any): void {
     //
   }
 
@@ -23,12 +23,15 @@ export class Trait {
 export default class Entity {
     public position: Vector;
     public velocity: Vector;
+    public size: Vector;
+
     private spriteSheet: SpriteSheet;
     private traits: Map<string, Trait>;
 
     constructor(spriteSheet: SpriteSheet) {
       this.position = new Vector(0, 0);
       this.velocity = new Vector(0, 0);
+      this.size = new Vector(0, 0);
       this.spriteSheet = spriteSheet;
       this.traits = new Map();
     }

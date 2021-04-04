@@ -1,8 +1,10 @@
-const PRESSED = 1;
-const RELEASED = 0;
+enum KeyState {
+    released,
+    pressed
+}
 
 export default class Keyboard {
-    private keyStates: Map<string, number>;
+    private keyStates: Map<string, KeyState>;
     private keyMap: Map<string, (code: string) => void>;
     constructor() {
         this.keyStates = new Map();
@@ -20,7 +22,7 @@ export default class Keyboard {
 
         event.preventDefault();
 
-        const keyState = event.type === 'keydown' ? PRESSED : RELEASED;
+        const keyState = event.type === 'keydown' ? KeyState.pressed : KeyState.released;
 
         if (this.keyStates.get(event.code) === keyState) {
             return;
