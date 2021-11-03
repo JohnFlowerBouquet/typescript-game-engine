@@ -1,17 +1,17 @@
-import { createPrince } from "./entities/prince";
+import { createMario } from "./entities/mario";
 import { setupKeyboard } from "./input";
 import { createCollisionLayer } from "./layers";
 import { loadLevel } from "./loaders";
 import Timer from "./Timer";
 import { isMouseEvent } from "./typeGuards";
 
-export const CANVAS_WIDTH = 720;
-export const CANVAS_HEIGHT = 480;
+export const CANVAS_WIDTH = 640;
+export const CANVAS_HEIGHT = 640;
 
 function createCanvas() {
   const canvas: HTMLCanvasElement = document.createElement('canvas');
-  // canvas.style.width = `${CANVAS_WIDTH}px`;
-  // canvas.style.height = `${CANVAS_HEIGHT}px`;
+  canvas.width = CANVAS_WIDTH;
+  canvas.height = CANVAS_HEIGHT;
   const context = canvas.getContext('2d');
 
   if (!context) {
@@ -19,12 +19,12 @@ function createCanvas() {
   }
 
   Promise.all([
-    createPrince(),
+    createMario(),
     loadLevel('1'),
-  ]).then(([prince, level]) => {    
-    level.entities.add(prince);
+  ]).then(([mario, level]) => {    
+    level.entities.add(mario);
 
-    const input = setupKeyboard(prince);
+    const input = setupKeyboard(mario);
     input.listenTo();
 
     if (process.env.NODE_ENV !== 'production') {
@@ -32,8 +32,8 @@ function createCanvas() {
       ['mousedown', 'mouseup'].forEach(eventName => {
         canvas.addEventListener(eventName, event => {
           if (isMouseEvent(event) && event.buttons === 1) {
-            prince.velocity.set(0, 0);
-            prince.position.set(event.offsetX, event.offsetY);
+            mario.velocity.set(0, 0);
+            mario.position.set(event.offsetX, event.offsetY);
           }
         })
       })

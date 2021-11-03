@@ -1,9 +1,10 @@
+import { TILE_SIZE } from "./globals";
 import Matrix, { Tile } from "./Matrix";
 
 export default class TileResolver {
     public matrix: Matrix;
     public tileSize: number;
-    constructor(matrix: Matrix, tileSize = 32) {
+    constructor(matrix: Matrix, tileSize = TILE_SIZE.width) {
         this.matrix = matrix;
         this.tileSize = tileSize;
     }

@@ -46,7 +46,7 @@ export default class Entity {
     }
   
     public draw(context: CanvasRenderingContext2D): void {
-      this.spriteSheet.draw('prince', context, this.position.x, this.position.y);
+      this.spriteSheet.draw('mario', context, this.position.x, this.position.y);
     }
 
     public addTrait(trait: Trait): void {

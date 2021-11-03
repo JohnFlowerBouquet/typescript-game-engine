@@ -32,7 +32,7 @@ export default class SpriteSheet {
         x: number,
         y: number
     ) {
-        this.define(name, x, y, this.width, this.height);
+        this.define(name, x *this.width, y * this.height, this.width, this.height);
     }
 
     public draw(
@@ -45,16 +45,10 @@ export default class SpriteSheet {
         if (!buffer) {
             throw new Error(`SpriteSheet.draw(): Sprite "${name}" not found`);
         }
-        context.drawImage(buffer, x, y);
+        context.drawImage(buffer, x, y, this.width, this.height);
     }
 
     public drawTile(name: string, context: CanvasRenderingContext2D, x: number, y: number): void {
         this.draw(name, context, x * this.width, y * this.height);
-    }
-
-    public drawTopKerbstone(context: CanvasRenderingContext2D, tilesCount: number): void {
-        for (let i = 0; i < tilesCount; i++) {
-            this.drawTile("kerbstone", context, i, 0);
-        }
     }
 }

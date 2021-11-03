@@ -26,7 +26,7 @@ export default class TileCollider {
         );
         
         matches.forEach(match => {
-            if (match.name !== "pavement") {
+            if (match.name !== "ground") {
                 return;
             }
     
@@ -61,7 +61,7 @@ export default class TileCollider {
         );
         
         matches.forEach(match => {
-            if (match.name !== "pavement") {
+            if (match.name !== "ground") {
                 return;
             }
     
