@@ -36,7 +36,7 @@ export default class TileCollider {
                     entity.velocity.x = 0;
                 }
             } else if (entity.velocity.x < 0 && match.x2) {
-                if (entity.position.x > match.x2) {
+                if (entity.position.x + entity.size.x > match.x2) {
                     entity.position.x = match.x2;
                     entity.velocity.x = 0;
                 }
