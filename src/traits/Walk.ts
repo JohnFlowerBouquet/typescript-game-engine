@@ -1,4 +1,5 @@
-import Entity, { Trait } from "../Entity";
+import Entity from "../Entity";
+import Trait from "./Trait";
 
 export default class Walk extends Trait {
     private direction = 0;

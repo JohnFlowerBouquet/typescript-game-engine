@@ -1,4 +1,5 @@
-import Entity, { Trait } from "../Entity";
+import Entity from "../Entity";
+import Trait from "./Trait";
 
 export default class Jump extends Trait {
     private duration = 0.5;
