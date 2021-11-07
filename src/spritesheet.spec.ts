@@ -20,12 +20,14 @@ describe("SpriteSheet", () => {
 
   it("draw should invoke drawImage on context", async () => {
     const imageStub = new Image();
-    const spritesheet = new SpriteSheet(imageStub, 100, 100);
+    const spritesheet = new SpriteSheet(imageStub, 150, 250);
     spritesheet.define("testSprite", 100, 150, 200, 250);
+    const tile = spritesheet.tiles.get("testSprite");
     const context = getContext();
     const spy = spyOn(context, "drawImage");
     
     spritesheet.draw("testSprite", context, 100, 200);
     expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toBeCalledWith(tile, 100, 200, 150, 250);
   });
 });
