@@ -1,3 +1,4 @@
+import Camera from "./Camera";
 import { createMario } from "./entities/mario";
 import { setupKeyboard } from "./input";
 import { createCollisionLayer } from "./layers";
@@ -22,6 +23,8 @@ function createCanvas() {
     createMario(),
     loadLevel('1'),
   ]).then(([mario, level]) => {    
+    const camera = new Camera();
+
     level.entities.add(mario);
 
     const input = setupKeyboard(mario);
@@ -33,7 +36,7 @@ function createCanvas() {
         canvas.addEventListener(eventName, event => {
           if (isMouseEvent(event) && event.buttons === 1) {
             mario.velocity.set(0, 0);
-            mario.position.set(event.offsetX, event.offsetY);
+            mario.position.set(event.offsetX + camera.position.x, event.offsetY + camera.position.y);
           }
         })
       })
@@ -44,7 +47,7 @@ function createCanvas() {
     const timer = new Timer();
     timer.updateFunction = (deltaTime) => {
       level.update(deltaTime);
-      level.compositor.draw(context);
+      level.compositor.draw(context, camera);
     }
 
     timer.start();

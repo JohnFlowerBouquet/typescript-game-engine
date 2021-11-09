@@ -1,8 +1,17 @@
-export function getContext(): CanvasRenderingContext2D {
-    const buffer = document.createElement("canvas");
-    const context = buffer.getContext("2d");
+export function getCanvasWithContext(
+    width?: number,
+    height?: number
+): { canvas: HTMLCanvasElement; context: CanvasRenderingContext2D } {
+    const canvas = document.createElement("canvas");
+    canvas.width = width ? width : canvas.width;
+    canvas.height = height ? height : canvas.height;
+
+    const context = canvas.getContext("2d");
     if (!context) {
         throw new Error(`Could not invoke getContext function`);
     }
-    return context;
+    return {
+        canvas,
+        context,
+    };
 }

@@ -1,5 +1,5 @@
 import SpriteSheet from "./spritesheet";
-import { getContext } from "./utils/getContext";
+import { getCanvasWithContext } from "./utils/getContext";
 
 describe("SpriteSheet", () => {
   it("should create", async () => {
@@ -23,7 +23,7 @@ describe("SpriteSheet", () => {
     const spritesheet = new SpriteSheet(imageStub, 150, 250);
     spritesheet.define("testSprite", 100, 150, 200, 250);
     const tile = spritesheet.tiles.get("testSprite");
-    const context = getContext();
+    const {context} = getCanvasWithContext();
     const spy = spyOn(context, "drawImage");
     
     spritesheet.draw("testSprite", context, 100, 200);
