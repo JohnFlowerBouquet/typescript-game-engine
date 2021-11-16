@@ -13,23 +13,21 @@ export function loadImage(url: string): Promise<HTMLImageElement> {
 }
 
 export function loadLevel(name: string): Promise<Level> {
-    return Promise.all([loadLevelMap(name), loadBackgroundSprites()]).then(
-        ([levelSpec, backgroundSprites]) => {
-            const level = new Level();
+    return Promise.all([
+        loadJSON<LevelMap>(`/levels/${name}.json`),
+        loadBackgroundSprites(),
+    ]).then(([levelSpec, backgroundSprites]) => {
+        const level = new Level();
 
-            createTiles(level, levelSpec.map);
+        createTiles(level, levelSpec.map);
 
-            const backgroundLayer = createBackgroundLayer(
-                level,
-                backgroundSprites
-            );
-            level.compositor.addLayer(backgroundLayer);
+        const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
+        level.compositor.addLayer(backgroundLayer);
 
-            const spriteLayer = createSpriteLayer(level.entities);
-            level.compositor.addLayer(spriteLayer);
-            return level;
-        }
-    );
+        const spriteLayer = createSpriteLayer(level.entities);
+        level.compositor.addLayer(spriteLayer);
+        return level;
+    });
 }
 
 function createTiles(level: Level, backgrounds: LevelMapRow[]): void {
@@ -46,6 +44,6 @@ function createTiles(level: Level, backgrounds: LevelMapRow[]): void {
     });
 }
 
-function loadLevelMap(name: string): Promise<LevelMap> {
-    return fetch(`/levels/${name}.json`).then((level) => level.json());
+function loadJSON<T>(url: string): Promise<T> {
+    return fetch(url).then((level) => level.json());
 }
