@@ -1,0 +1,21 @@
+{
+    "url": "/assets/tiles.png",
+    "width": 16,
+    "height": 16,
+    "sprites": [
+        {
+            "name": "ground",
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "name": "sky",
+            "position": {
+                "x": 3,
+                "y": 23
+            }
+        }
+    ]
+}

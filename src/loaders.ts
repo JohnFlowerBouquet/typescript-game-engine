@@ -1,8 +1,8 @@
 import { TILE_SIZE } from "./globals";
-import { LevelMap, LevelMapRow } from "./interface";
+import { LevelMap, LevelMapRow, Position } from "./interface";
 import { createBackgroundLayer, createSpriteLayer } from "./layers";
 import Level from "./Level";
-import { loadBackgroundSprites } from "./sprites";
+import SpriteSheet from "./spritesheet";
 
 export function loadImage(url: string): Promise<HTMLImageElement> {
     return new Promise((resolve) => {
@@ -15,7 +15,7 @@ export function loadImage(url: string): Promise<HTMLImageElement> {
 export function loadLevel(name: string): Promise<Level> {
     return Promise.all([
         loadJSON<LevelMap>(`/levels/${name}.json`),
-        loadBackgroundSprites(),
+        loadSpriteSheet("background"),
     ]).then(([levelSpec, backgroundSprites]) => {
         const level = new Level();
 
@@ -28,6 +28,28 @@ export function loadLevel(name: string): Promise<Level> {
         level.compositor.addLayer(spriteLayer);
         return level;
     });
+}
+
+function loadSpriteSheet(name: string): any {
+    return loadJSON<SpriteSheetConfiguration>(`/sprites/${name}.json`)
+        .then((spriteSheetConfig) =>
+            Promise.all([spriteSheetConfig, loadImage(spriteSheetConfig.url)])
+        )
+        .then(([spriteSheetConfig, image]) => {
+            const sprites = new SpriteSheet(
+                image,
+                spriteSheetConfig.width,
+                spriteSheetConfig.height
+            );
+            spriteSheetConfig.sprites.forEach((tileSpec) => {
+                sprites.defineTile(
+                    tileSpec.name,
+                    tileSpec.position.x,
+                    tileSpec.position.y
+                );
+            });
+            return sprites;
+        });
 }
 
 function createTiles(level: Level, backgrounds: LevelMapRow[]): void {
@@ -46,4 +68,11 @@ function createTiles(level: Level, backgrounds: LevelMapRow[]): void {
 
 function loadJSON<T>(url: string): Promise<T> {
     return fetch(url).then((level) => level.json());
+}
+
+interface SpriteSheetConfiguration {
+    url: string;
+    width: number;
+    height: number;
+    sprites: { name: string; position: Position }[];
 }
