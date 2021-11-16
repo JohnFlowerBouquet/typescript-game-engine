@@ -4,7 +4,7 @@ import { setupKeyboard } from "./input";
 import { createCollisionLayer } from "./layers";
 import { loadLevel } from "./loaders";
 import Timer from "./Timer";
-import { isMouseEvent } from "./typeGuards";
+import { setupMouseControl } from "./utils/debug";
 
 export const CANVAS_WIDTH = 640;
 export const CANVAS_HEIGHT = 640;
@@ -31,16 +31,7 @@ function createCanvas() {
     input.listenTo();
 
     if (process.env.NODE_ENV !== 'production') {
-      // DEVELOPMENT HELPERS
-      ['mousedown', 'mouseup'].forEach(eventName => {
-        canvas.addEventListener(eventName, event => {
-          if (isMouseEvent(event) && event.buttons === 1) {
-            mario.velocity.set(0, 0);
-            mario.position.set(event.offsetX + camera.position.x, event.offsetY + camera.position.y);
-          }
-        })
-      })
-
+      setupMouseControl(canvas, mario, camera);
       level.compositor.addLayer(createCollisionLayer(level));
     }
 
