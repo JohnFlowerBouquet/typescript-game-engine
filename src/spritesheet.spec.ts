@@ -30,4 +30,14 @@ describe("SpriteSheet", () => {
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toBeCalledWith(tile, 100, 200, 150, 250);
   });
+
+  it("draw should NOT invoke drawImage if buffer is not found", async () => {
+    const imageStub = new Image();
+    const spritesheet = new SpriteSheet(imageStub, 150, 250);
+    const {context} = getCanvasWithContext();
+    const spy = spyOn(context, "drawImage");
+    
+    spritesheet.draw("testSprite", context, 100, 200);
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
 });
