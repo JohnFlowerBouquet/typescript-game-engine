@@ -1,6 +1,7 @@
 export type LevelMapRow = string[];
 
 export interface LevelMap {
+    spriteSheet: string;
     map: LevelMapRow[];
 }
 
