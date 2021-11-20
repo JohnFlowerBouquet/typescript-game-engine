@@ -1,12 +1,12 @@
 import Camera from "./Camera";
 import { createMario } from "./entities/mario";
 import { setupKeyboard } from "./input";
-import { createCollisionLayer } from "./layers";
+import { createCameraLayer, createCollisionLayer } from "./layers";
 import { loadLevel } from "./loaders";
 import Timer from "./Timer";
 import { setupMouseControl } from "./utils/debug";
 
-export const CANVAS_WIDTH = 640;
+export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 640;
 
 function createCanvas() {
@@ -33,6 +33,7 @@ function createCanvas() {
     if (process.env.NODE_ENV !== 'production') {
       setupMouseControl(canvas, mario, camera);
       level.compositor.addLayer(createCollisionLayer(level));
+      level.compositor.addLayer(createCameraLayer(camera));
     }
 
     const timer = new Timer();

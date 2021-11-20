@@ -1,12 +1,13 @@
 import Camera from "./Camera";
+import { Layer } from "./layers";
 
 export default class Compositor {
-    private layers: Array<(context: CanvasRenderingContext2D, camera: Camera) => void>;
+    private layers: Array<Layer>;
     constructor() {
       this.layers = [];
     }
   
-    public addLayer(layer: any): void {
+    public addLayer(layer: Layer): void {
       this.layers.push(layer);
     }
   
