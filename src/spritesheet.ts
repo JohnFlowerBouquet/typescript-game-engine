@@ -1,3 +1,5 @@
+import { getCanvasWithContext } from "./utils/getContext";
+
 export default class SpriteSheet {
     public tiles = new Map<string, HTMLCanvasElement>();
     public animations = new Map<string, Animation>();
@@ -15,16 +17,10 @@ export default class SpriteSheet {
         width: number,
         height: number
     ) {
-        const buffer = document.createElement("canvas");
-        const context = buffer.getContext("2d");
-        buffer.width = width;
-        buffer.height = height;
-        if (!context) {
-            throw new Error(`SpriteSheet.draw(): Sprite "${name}" not found`);
-        }
-        context.drawImage(this.image, x, y, width, height, 0, 0, width, height);
+        const {canvas, context } = getCanvasWithContext(width, height);
 
-        this.tiles.set(name, buffer);
+        context.drawImage(this.image, x, y, width, height, 0, 0, width, height);
+        this.tiles.set(name, canvas);
     }
 
     public defineTile(
@@ -42,10 +38,9 @@ export default class SpriteSheet {
         y: number
     ): void {
         const buffer = this.tiles.get(name);
-        if (!buffer) {
-            throw new Error(`SpriteSheet.draw(): Sprite "${name}" not found`);
+        if (buffer) {
+            context.drawImage(buffer, x, y, this.width, this.height);
         }
-        context.drawImage(buffer, x, y, this.width, this.height);
     }
 
     public drawTile(name: string, context: CanvasRenderingContext2D, x: number, y: number): void {
