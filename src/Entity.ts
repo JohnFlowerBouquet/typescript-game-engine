@@ -1,4 +1,4 @@
-import SpriteSheet from "./spritesheet";
+import SpriteSheet from "./SpriteSheet";
 import Trait from "./traits/Trait";
 import { Vector } from "./vectors";
 

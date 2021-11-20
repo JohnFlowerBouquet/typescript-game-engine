@@ -2,7 +2,7 @@ import { TILE_SIZE } from "./globals";
 import { LevelMap, LevelMapRow, Position } from "./interface";
 import { createBackgroundLayer, createSpriteLayer } from "./layers";
 import Level from "./Level";
-import SpriteSheet from "./spritesheet";
+import SpriteSheet from "./SpriteSheet";
 
 export function loadImage(url: string): Promise<HTMLImageElement> {
     return new Promise((resolve) => {

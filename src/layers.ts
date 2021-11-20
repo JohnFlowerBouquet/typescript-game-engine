@@ -4,7 +4,7 @@ import { TILE_SIZE } from "./globals";
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./index";
 import Level from "./Level";
 import Matrix from "./Matrix";
-import SpriteSheet from "./spritesheet";
+import SpriteSheet from "./SpriteSheet";
 import { getCanvasWithContext } from "./utils/getContext";
 
 export type Layer = (context: CanvasRenderingContext2D, camera: Camera) => void;

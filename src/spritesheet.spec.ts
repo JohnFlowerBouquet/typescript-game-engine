@@ -1,4 +1,4 @@
-import SpriteSheet from "./spritesheet";
+import SpriteSheet from "./SpriteSheet";
 import { getCanvasWithContext } from "./utils/getContext";
 
 describe("SpriteSheet", () => {
