@@ -2,6 +2,7 @@ import Entity from "./Entity";
 import Matrix from "./Matrix";
 import TileResolver from "./TileResolver";
 
+const colliders = new Set<string>(["ground", "bricks", "block", "question"]);
 export default class TileCollider {
     public tiles: TileResolver;
 
@@ -26,7 +27,7 @@ export default class TileCollider {
         );
         
         matches.forEach(match => {
-            if (match.name !== "ground") {
+            if (!colliders.has(match.name)) {
                 return;
             }
     
@@ -61,7 +62,7 @@ export default class TileCollider {
         );
         
         matches.forEach(match => {
-            if (match.name !== "ground") {
+            if (!colliders.has(match.name)) {
                 return;
             }
     
