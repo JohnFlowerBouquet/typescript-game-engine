@@ -6,7 +6,6 @@ export function setupMouseControl(canvas: HTMLCanvasElement, entity: Entity, cam
     let lastEvent: MouseEvent;
     ['mousedown', 'mouseup', 'mousemove'].forEach(eventName => {
         canvas.addEventListener(eventName, event => {
-            console.log(event);
           if (isMouseEvent(event) && event.buttons === 1) {
             entity.velocity.set(0, 0);
             entity.position.set(event.offsetX + camera.position.x, event.offsetY + camera.position.y);
