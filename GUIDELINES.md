@@ -27,3 +27,11 @@ config: jest initial configuration
 ```
 fix: updated collision logic to include entity size when colliding with left wall
 ```
+
+### Testing
+
+For unit testing single file use:
+
+```
+npm test --<file name>
+```
