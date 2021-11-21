@@ -28,7 +28,7 @@ export default class Entity {
     }
   
     public draw(context: CanvasRenderingContext2D): void {
-      this.spriteSheet.draw('mario', context, 0, 0);
+      this.spriteSheet.draw('idle', context, 0, 0);
     }
 
     public addTrait(trait: Trait): void {

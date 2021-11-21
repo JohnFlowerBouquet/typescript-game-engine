@@ -34,7 +34,7 @@ export function loadLevel(name: string): Promise<Level> {
         });
 }
 
-function loadSpriteSheet(name: string): Promise<SpriteSheet> {
+export function loadSpriteSheet(name: string): Promise<SpriteSheet> {
     return loadJSON<SpriteSheetConfiguration>(`/sprites/${name}.json`)
         .then((spriteSheetConfig) =>
             Promise.all([spriteSheetConfig, loadImage(spriteSheetConfig.url)])
@@ -45,13 +45,23 @@ function loadSpriteSheet(name: string): Promise<SpriteSheet> {
                 spriteSheetConfig.width,
                 spriteSheetConfig.height
             );
-            spriteSheetConfig.sprites.forEach((tileSpec) => {
-                sprites.defineTile(
-                    tileSpec.name,
-                    tileSpec.position.x,
-                    tileSpec.position.y
-                );
-            });
+
+            if (spriteSheetConfig.sprites) {
+                spriteSheetConfig.sprites.forEach((tileSpec) => {
+                    sprites.defineTile(
+                        tileSpec.name,
+                        tileSpec.position.x,
+                        tileSpec.position.y
+                    );
+                });
+            }
+
+            if (spriteSheetConfig.frames) {
+                spriteSheetConfig.frames.forEach(frameSpec => {
+                    sprites.define(frameSpec.name, ...frameSpec.rect);
+                })
+            }
+            
             return sprites;
         });
 }
@@ -74,9 +84,14 @@ function loadJSON<T>(url: string): Promise<T> {
     return fetch(url).then((level) => level.json());
 }
 
+interface Frame {
+    name: string;
+    rect: [number, number, number, number];
+}
 interface SpriteSheetConfiguration {
     url: string;
     width: number;
     height: number;
     sprites: { name: string; position: Position }[];
+    frames?: Frame[]
 }

@@ -1,10 +1,10 @@
 import Entity from "../Entity";
-import { loadMarioSprite } from "../sprites";
+import { loadSpriteSheet } from "../loaders";
 import Jump from "../traits/Jump";
 import Walk from "../traits/Walk";
 
 export function createMario(): Promise<Entity> {
-    return loadMarioSprite().then(sprite => {
+    return loadSpriteSheet("mario").then(sprite => {
         const mario = new Entity(sprite);
         mario.size.set(16, 16);
         mario.addTrait(new Walk());

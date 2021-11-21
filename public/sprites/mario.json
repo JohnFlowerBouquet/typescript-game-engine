@@ -1,0 +1,11 @@
+{
+    "url": "/assets/characters.gif",
+    "width": 16,
+    "height": 16,
+    "frames": [
+        {
+            "name": "idle",
+            "rect": [276, 44, 16, 16]
+        }
+    ]
+}
