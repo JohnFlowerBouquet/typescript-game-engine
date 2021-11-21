@@ -10,7 +10,7 @@ export default class TileCollider {
         this.tiles = new TileResolver(matrix);
     }
 
-    public checkX(entity: Entity): any {
+    public checkX(entity: Entity): void {
         let x: number;
         if (entity.velocity.x > 0) {
             x = entity.position.x + entity.size.x;
@@ -45,14 +45,14 @@ export default class TileCollider {
         })
     }
 
-    public checkY(entity: Entity): any {
+    public checkY(entity: Entity): void {
         let y: number;
         if (entity.velocity.y > 0) {
             y = entity.position.y + entity.size.y;
         } else if (entity.velocity.y < 0) {
             y = entity.position.y;
         } else {
-            return
+            return;
         }
         const matches = this.tiles.searchByRange(
             entity.position.x,
@@ -78,9 +78,5 @@ export default class TileCollider {
                 }
             }
         })
-    }
-
-    public test(entity: Entity): void {
-        this.checkY(entity);
     }
 }
