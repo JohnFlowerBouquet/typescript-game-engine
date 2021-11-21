@@ -5,19 +5,13 @@ import { createCameraLayer, createCollisionLayer } from "./layers";
 import { loadLevel } from "./loaders";
 import Timer from "./Timer";
 import { setupMouseControl } from "./utils/debug";
+import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 640;
 
 function createCanvas() {
-  const canvas: HTMLCanvasElement = document.createElement('canvas');
-  canvas.width = CANVAS_WIDTH;
-  canvas.height = CANVAS_HEIGHT;
-  const context = canvas.getContext('2d');
-
-  if (!context) {
-    throw new Error(`SpriteSheet.draw(): Sprite not found`);
-  }
+  const {canvas, context} = getCanvasWithContext(CANVAS_WIDTH, CANVAS_HEIGHT);
 
   Promise.all([
     createMario(),

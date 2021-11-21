@@ -1,5 +1,5 @@
 import SpriteSheet from "./SpriteSheet";
-import { getCanvasWithContext } from "./utils/getContext";
+import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 
 describe("SpriteSheet", () => {
   it("should create", async () => {

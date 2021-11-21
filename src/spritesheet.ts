@@ -1,4 +1,4 @@
-import { getCanvasWithContext } from "./utils/getContext";
+import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 
 export default class SpriteSheet {
     public tiles = new Map<string, HTMLCanvasElement>();
