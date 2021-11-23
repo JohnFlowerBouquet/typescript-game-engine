@@ -1,7 +1,7 @@
 import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 
 export default class SpriteSheet {
-    public tiles = new Map<string, HTMLCanvasElement>();
+    public tiles = new Map<string, HTMLCanvasElement[]>();
     public animations = new Map<string, Animation>();
 
     constructor(
@@ -17,10 +17,19 @@ export default class SpriteSheet {
         width: number,
         height: number
     ) {
-        const {canvas, context } = getCanvasWithContext(width, height);
+        const buffers = [false, true].map(isFlip => {
+            const {canvas, context } = getCanvasWithContext(width, height);
 
-        context.drawImage(this.image, x, y, width, height, 0, 0, width, height);
-        this.tiles.set(name, canvas);
+            if (isFlip) {
+                context.scale(-1, 1);
+                context.translate(-width, 0);
+            }
+
+            context.drawImage(this.image, x, y, width, height, 0, 0, width, height);
+            return canvas;
+        })
+        
+        this.tiles.set(name, buffers);
     }
 
     public defineTile(
@@ -35,10 +44,12 @@ export default class SpriteSheet {
         name: string,
         context: CanvasRenderingContext2D,
         x: number,
-        y: number
+        y: number,
+        flip = false
     ): void {
-        const buffer = this.tiles.get(name);
-        if (buffer) {
+        const buffers = this.tiles.get(name);
+        if (buffers) {
+            const buffer = flip ? buffers[1] : buffers[0];
             context.drawImage(buffer, x, y, this.width, this.height);
         }
     }

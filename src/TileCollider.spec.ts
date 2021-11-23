@@ -27,7 +27,7 @@ import TileCollider from "./TileCollider";
 
     const imageStub = new Image();
     const spritesheet = new SpriteSheet(imageStub, 0, 0);
-    const entity = new Entity(spritesheet);
+    const entity = new Entity(spritesheet, () => ({frameName: "", isFlipped: false}));
     entity.velocity.x = 0;
     entity.position.x = 32;
     entity.position.y = 64;
