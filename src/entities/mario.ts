@@ -9,7 +9,13 @@ const frames = ["run-1", "run-2", "run-3"];
 function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
     const walkTrait = entity.trait("walk") as Walk;
     const isFlipped = walkTrait.heading < 0;
-    if (walkTrait.direction !== 0) {
+    if (walkTrait.distance > 0) {
+        if ((entity.velocity.x > 0 && walkTrait.direction < 0) || (entity.velocity.x < 0 && walkTrait.direction > 0)) {
+            return {
+                frameName: "break",
+                isFlipped
+            };
+        }
         const runAnimation = getAnimationFrame(frames, 10);
         return {
             frameName: runAnimation(walkTrait.distance),
