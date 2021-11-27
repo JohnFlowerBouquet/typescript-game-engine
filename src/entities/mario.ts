@@ -8,7 +8,14 @@ const frames = ["run-1", "run-2", "run-3"];
 
 function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
     const walkTrait = entity.trait("walk") as Walk;
+    const jumpTrait = entity.trait("jump") as Jump;
     const isFlipped = walkTrait.heading < 0;
+    if (!jumpTrait.ready) {
+        return {
+            frameName: "jump",
+            isFlipped
+        };
+    }
     if (walkTrait.distance > 0) {
         if ((entity.velocity.x > 0 && walkTrait.direction < 0) || (entity.velocity.x < 0 && walkTrait.direction > 0)) {
             return {
