@@ -34,6 +34,10 @@ function createCanvas() {
     timer.updateFunction = (deltaTime) => {
       level.update(deltaTime);
       level.compositor.draw(context, camera);
+      
+      if (mario.position.x > 100) {
+        camera.position.x = mario.position.x - 100;
+      }
     }
 
     timer.start();
