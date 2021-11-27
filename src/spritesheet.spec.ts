@@ -23,7 +23,7 @@ describe("SpriteSheet", () => {
         const imageStub = new Image();
         const spritesheet = new SpriteSheet(imageStub, 150, 250);
         spritesheet.define("testSprite", 100, 150, 200, 250);
-        const tile = spritesheet.tiles.get("testSprite");
+        const tile = spritesheet.tiles.get("testSprite")?.[0];
         const { context } = getCanvasWithContext();
         const spy = spyOn(context, "drawImage");
 

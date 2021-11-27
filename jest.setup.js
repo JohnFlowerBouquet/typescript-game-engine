@@ -7,4 +7,8 @@ class MockContext {
         this.width = sw;
         this.height = sh;
     }
+
+    scale() { }
+
+    translate() { }
 }
