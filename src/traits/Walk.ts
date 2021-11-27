@@ -3,9 +3,11 @@ import Trait from "./Trait";
 
 export default class Walk extends Trait {
     private _direction = 0;
-    private _speed = 5000;
+    private _acceleration = 400;
+    private _deceleration = 300;
     private _distance = 0;
     private _heading = 1;
+    private _dragFactor = 1/5000;
 
     constructor() {
         super('walk');
@@ -24,14 +26,22 @@ export default class Walk extends Trait {
     }
 
     public update(entity: Entity, deltaTime: number): void {
-        entity.velocity.x = this._speed * this._direction * deltaTime;
-
-        if (this._direction) {
+        const absoluteX = Math.abs(entity.velocity.x);
+        if (this._direction !== 0) {
+            entity.velocity.x += this._acceleration * this._direction * deltaTime;
             this._heading = this._direction;
-            this._distance += Math.abs(entity.velocity.x) * deltaTime;
+            this._distance += absoluteX * deltaTime;
+        } else if (entity.velocity.x !== 0) {
+            const deceleration = Math.min(absoluteX, this._deceleration * deltaTime);
+            entity.velocity.x += entity.velocity.x > 0 ? -deceleration : deceleration;
         } else {
             this._distance = 0;
         }
+
+        const drag = this._dragFactor * entity.velocity.x * absoluteX;
+        entity.velocity.x -= drag;
+
+        this._distance += absoluteX * deltaTime;
     }
 
     public start(direction: number): void {
