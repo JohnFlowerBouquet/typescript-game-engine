@@ -37,6 +37,40 @@
                 "x": 24,
                 "y": 0
             }
+        },
+        {
+            "name": "question-1",
+            "position": {
+                "x": 24,
+                "y": 0
+            }
+        },
+        {
+            "name": "question-2",
+            "position": {
+                "x": 25,
+                "y": 0
+            }
+        },
+        {
+            "name": "question-3",
+            "position": {
+                "x": 26,
+                "y": 0
+            }
+        }
+    ],
+    "animations": [
+        {
+            "name": "question",
+            "frameLength": 0.15,
+            "frames": [
+                "question-1",
+                "question-1",
+                "question-2",
+                "question-3",
+                "question-2"
+            ]
         }
     ]
 }

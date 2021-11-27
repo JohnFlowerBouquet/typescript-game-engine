@@ -2,22 +2,15 @@ import Entity from "../Entity";
 import { loadSpriteSheet } from "../loaders";
 import Jump from "../traits/Jump";
 import Walk from "../traits/Walk";
+import { getAnimationFrame } from "../utils/getAnimationFrame";
 
 const frames = ["run-1", "run-2", "run-3"];
-
-function createAnimation(frames: string[], frameLength: number) {
-    return (distance: number) => {
-        const frameIndex = Math.floor(distance / frameLength) % frames.length;
-        const frameName = frames[frameIndex];
-        return frameName;
-    };
-}
 
 function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
     const walkTrait = entity.trait("walk") as Walk;
     const isFlipped = walkTrait.heading < 0;
     if (walkTrait.direction !== 0) {
-        const runAnimation = createAnimation(frames, 10);
+        const runAnimation = getAnimationFrame(frames, 10);
         return {
             frameName: runAnimation(walkTrait.distance),
             isFlipped

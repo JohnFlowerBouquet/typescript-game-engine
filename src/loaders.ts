@@ -3,6 +3,7 @@ import { LevelMap, LevelMapRow, Position } from "./interface";
 import { createBackgroundLayer, createSpriteLayer } from "./layers";
 import Level from "./Level";
 import SpriteSheet from "./SpriteSheet";
+import { getAnimationFrame } from "./utils/getAnimationFrame";
 
 export function loadImage(url: string): Promise<HTMLImageElement> {
     return new Promise((resolve) => {
@@ -61,6 +62,13 @@ export function loadSpriteSheet(name: string): Promise<SpriteSheet> {
                     sprites.define(frameSpec.name, ...frameSpec.rect);
                 })
             }
+
+            if (spriteSheetConfig.animations) {
+                spriteSheetConfig.animations.forEach(animationSpec => {
+                    const animationFrame = getAnimationFrame(animationSpec.frames, animationSpec.frameLength);
+                    sprites.defineAnimation(animationSpec.name, animationFrame);
+                })
+            }
             
             return sprites;
         });
@@ -84,14 +92,22 @@ function loadJSON<T>(url: string): Promise<T> {
     return fetch(url).then((level) => level.json());
 }
 
+interface Animation {
+    name: string;
+    frameLength: number;
+    frames: string[];
+}
+
 interface Frame {
     name: string;
     rect: [number, number, number, number];
 }
+
 interface SpriteSheetConfiguration {
     url: string;
     width: number;
     height: number;
     sprites: { name: string; position: Position }[];
-    frames?: Frame[]
+    frames?: Frame[],
+    animations?: Animation[]
 }

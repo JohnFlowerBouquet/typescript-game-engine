@@ -1,8 +1,10 @@
 import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 
+type FrameResolver = (distance: number) => string;
+
 export default class SpriteSheet {
     public tiles = new Map<string, HTMLCanvasElement[]>();
-    public animations = new Map<string, Animation>();
+    public animations = new Map<string, FrameResolver>();
 
     constructor(
         public image: HTMLImageElement,
@@ -16,7 +18,7 @@ export default class SpriteSheet {
         y: number,
         width: number,
         height: number
-    ) {
+    ): void {
         const buffers = [false, true].map(isFlip => {
             const {canvas, context } = getCanvasWithContext(width, height);
 
@@ -36,8 +38,12 @@ export default class SpriteSheet {
         name: string,
         x: number,
         y: number
-    ) {
+    ): void {
         this.define(name, x *this.width, y * this.height, this.width, this.height);
+    }
+
+    public defineAnimation(name: string, animation: FrameResolver): void {
+        this.animations.set(name, animation);
     }
 
     public draw(
@@ -56,5 +62,13 @@ export default class SpriteSheet {
 
     public drawTile(name: string, context: CanvasRenderingContext2D, x: number, y: number): void {
         this.draw(name, context, x * this.width, y * this.height);
+    }
+
+    public drawAnimation(name: string, context: CanvasRenderingContext2D, x: number, y: number, distance: number): void {
+        const frameResolver = this.animations.get(name);
+        if (frameResolver) {
+            const animationFrame = frameResolver(distance);
+            this.drawTile(animationFrame, context, x, y);
+        }
     }
 }

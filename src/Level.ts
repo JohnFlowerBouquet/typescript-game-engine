@@ -9,6 +9,7 @@ export default class Level {
     public tiles: Matrix;
     public tileCollider: TileCollider;
     public gravity = 2000;
+    public totalTime = 0;
 
     constructor() {
         this.compositor = new Compositor();
@@ -29,5 +30,6 @@ export default class Level {
 
             entity.velocity.y += this.gravity * deltaTime;
         })
+        this.totalTime += deltaTime;
     }
 }

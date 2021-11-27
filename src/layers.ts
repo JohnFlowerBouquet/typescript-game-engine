@@ -23,9 +23,11 @@ export function createBackgroundLayer(
     let startIndex: number, endIndex: number;
 
     function reDraw(drawFrom: number, drawTo: number) {
-        if (drawFrom === startIndex && drawTo === endIndex) {
-            return;
-        }
+        // Optimization: Redraw background only when position changed
+        // Turned of due to unable running animated frames
+        // if (drawFrom === startIndex && drawTo === endIndex) {
+        //     return;
+        // }
         startIndex = drawFrom;
         endIndex = drawTo;
         
@@ -33,7 +35,11 @@ export function createBackgroundLayer(
             const col = level.tiles.grid[x];
             if (col) {
                 col.forEach((tile, y) => {
-                    sprites.drawTile(tile.name, context, x - drawFrom, y);
+                    if (sprites.animations.has(tile.name)) {
+                        sprites.drawAnimation(tile.name, context, x - drawFrom, y, level.totalTime);
+                    } else {
+                        sprites.drawTile(tile.name, context, x - drawFrom, y);
+                    }
                 });
             }
         }

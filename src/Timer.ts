@@ -17,6 +17,10 @@ export default class Timer {
     private update(time: number = 0): void {
         this.accumulatedTime += (time - this.lastTime) / 1000;
 
+        if (this.accumulatedTime > 1) {
+            this.accumulatedTime = 1;
+        }
+
         while (this.accumulatedTime > this.deltaTime) {
             this.updateFunction(this.deltaTime)
             this.accumulatedTime -= this.deltaTime;
