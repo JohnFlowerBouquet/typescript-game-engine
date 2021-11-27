@@ -37,4 +37,8 @@ export default class Walk extends Trait {
     public start(direction: number): void {
         this._direction = direction;
     }
+
+    public cancel(): void {
+        this._direction = 0;
+    }
 }

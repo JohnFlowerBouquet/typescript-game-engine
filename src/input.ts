@@ -1,20 +1,27 @@
 import Entity from "./Entity";
-import Keyboard from "./KeyboardState";
+import Keyboard, { KeyState } from "./KeyboardState";
 
 export function setupKeyboard(entity: Entity): Keyboard {
     const input = new Keyboard();
-    input.addMaping("Space", (keyState) => {
-        if (keyState) {
+    input.addMaping("Space", (keyState: KeyState) => {
+        if (keyState === KeyState.pressed) {
             entity.trait("jump").start();
-        } else {
-            entity.trait("jump").cancel();
         }
     });
     input.addMaping("ArrowLeft", (keyState) => {
-        entity.trait("walk").start(-1);
+        if (keyState === KeyState.pressed) {
+            entity.trait("walk").start(-1);
+        } else {
+            entity.trait("walk").cancel();
+        }
+        
     });
     input.addMaping("ArrowRight", (keyState) => {
-        entity.trait("walk").start(1);
+        if (keyState === KeyState.pressed) {
+            entity.trait("walk").start(1);
+        } else {
+            entity.trait("walk").cancel();
+        }
     });
 
     return input;

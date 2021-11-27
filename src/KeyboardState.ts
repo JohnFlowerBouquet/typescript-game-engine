@@ -1,17 +1,17 @@
-enum KeyState {
+export enum KeyState {
     released,
     pressed
 }
 
 export default class Keyboard {
     private keyStates: Map<string, KeyState>;
-    private keyMap: Map<string, (code: string) => void>;
+    private keyMap: Map<string, (code: KeyState) => void>;
     constructor() {
         this.keyStates = new Map();
         this.keyMap = new Map();
     }
 
-    public addMaping(code: string, callback: (code: string) => void): void {
+    public addMaping(code: string, callback: (code: KeyState) => void): void {
         this.keyMap.set(code, callback);
     }
 
@@ -30,7 +30,7 @@ export default class Keyboard {
 
         this.keyStates.set(event.code, keyState);
         const callback = this.keyMap.get(event.code);
-        callback && callback(event.code);
+        callback && callback(keyState);
     }
 
     public listenTo(): void {
