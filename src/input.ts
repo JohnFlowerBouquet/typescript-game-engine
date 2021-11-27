@@ -12,7 +12,7 @@ export function setupKeyboard(entity: Entity): Keyboard {
         if (keyState === KeyState.pressed) {
             entity.trait("walk").start(-1);
         } else {
-            entity.trait("walk").cancel();
+            entity.trait("walk").start(1);
         }
         
     });
@@ -20,7 +20,7 @@ export function setupKeyboard(entity: Entity): Keyboard {
         if (keyState === KeyState.pressed) {
             entity.trait("walk").start(1);
         } else {
-            entity.trait("walk").cancel();
+            entity.trait("walk").start(-1);
         }
     });
 
