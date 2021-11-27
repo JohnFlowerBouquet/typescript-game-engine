@@ -44,6 +44,12 @@ export default class Entity {
         this.traits.set(trait.name, trait);
     }
 
+    public obstruct(side: string): void {
+        this.traits.forEach((trait) => {
+            trait.obstruct(this, side);
+        });
+    }
+
     public update(deltaTime: number): void {
         this.traits.forEach((trait) => {
             trait.update(this, deltaTime);

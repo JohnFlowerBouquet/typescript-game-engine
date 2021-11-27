@@ -6,15 +6,11 @@ export default class Trait {
       this.name = name;
     }
   
-    public update(entity: Entity, deltaTime: number): void {
-      //
-    }
+    public update(entity: Entity, deltaTime: number): void {}
   
-    public start(params?: any): void {
-      //
-    }
+    public start(params?: any): void {}
   
-    public cancel(): void {
-      //
-    }
+    public cancel(): void {}
+
+    public obstruct(entity: Entity, side: string): void {}
   }
