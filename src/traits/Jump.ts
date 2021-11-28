@@ -8,6 +8,7 @@ export default class Jump extends Trait {
     private _requestTime = 0;
     private _ready = 0;
     private _gracePeriod = 0.5;
+    private _speedBoost = 0.3;
 
     public get falling() {
         return this._ready < 0;
@@ -43,7 +44,7 @@ export default class Jump extends Trait {
             this._requestTime -= deltaTime;
         }
         if (this._engageTime > 0) {
-            entity.velocity.y = -this._velocity;
+            entity.velocity.y = -(this._velocity + Math.abs(entity.velocity.x) * this._speedBoost);
             this._engageTime -= deltaTime;
         }
         this._ready--;
