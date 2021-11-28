@@ -23,7 +23,7 @@ function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
                 isFlipped
             };
         }
-        const runAnimation = getAnimationFrame(frames, 10);
+        const runAnimation = getAnimationFrame(frames, 6);
         return {
             frameName: runAnimation(walkTrait.distance),
             isFlipped

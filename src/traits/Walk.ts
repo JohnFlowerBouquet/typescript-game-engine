@@ -8,7 +8,7 @@ export default class Walk extends Trait {
     private _deceleration = 300;
     private _distance = 0;
     private _heading = 1;
-    private _dragFactor = 1/5000;
+    private _dragFactor = 1/1000;
 
     constructor() {
         super('walk');
@@ -53,5 +53,9 @@ export default class Walk extends Trait {
 
     public start(direction: number): void {
         this._direction += direction;
+    }
+
+    public sprint(isOn: boolean): void {
+        this._dragFactor = isOn ? 1/5000 : 1/1000;
     }
 }
