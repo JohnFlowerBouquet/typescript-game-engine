@@ -2,7 +2,7 @@ import Entity, { Side } from "./Entity";
 import Matrix from "./Matrix";
 import TileResolver from "./TileResolver";
 
-const colliders = new Set<string>(["ground", "bricks", "block", "question"]);
+const colliders = new Set<string>(["ground", "bricks", "block", "question", "pipe-insert-vert-left", "pipe-insert-vert-right", "pipe-vert-left", "pipe-vert-right"]);
 export default class TileCollider {
     public tiles: TileResolver;
 

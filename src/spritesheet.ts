@@ -61,6 +61,9 @@ export default class SpriteSheet {
     }
 
     public drawTile(name: string, context: CanvasRenderingContext2D, x: number, y: number): void {
+        if (name !== "sky" ) {
+            this.draw("sky", context, x * this.width, y * this.height);
+        }
         this.draw(name, context, x * this.width, y * this.height);
     }
 
