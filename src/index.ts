@@ -2,7 +2,7 @@ import Camera from "./Camera";
 import { createMario } from "./entities/mario";
 import { setupKeyboard } from "./input";
 import { createCameraLayer, createCollisionLayer } from "./layers";
-import { loadLevel } from "./loaders";
+import { loadLevel } from "./loaders/level";
 import Timer from "./Timer";
 import { setupMouseControl } from "./utils/debug";
 import { getCanvasWithContext } from "./utils/getCanvasWithContext";
