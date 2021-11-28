@@ -8,7 +8,7 @@ export default class Level {
     public entities: Set<Entity>;
     public tiles: Matrix;
     public tileCollider: TileCollider;
-    public gravity = 2000;
+    public gravity = 1500;
     public totalTime = 0;
 
     constructor() {
