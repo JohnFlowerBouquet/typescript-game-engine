@@ -10,7 +10,7 @@ function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
     const walkTrait = entity.trait("walk") as Walk;
     const jumpTrait = entity.trait("jump") as Jump;
     const isFlipped = walkTrait.heading < 0;
-    if (!jumpTrait.ready) {
+    if (jumpTrait.falling) {
         return {
             frameName: "jump",
             isFlipped

@@ -2,6 +2,11 @@ import SpriteSheet from "./SpriteSheet";
 import Trait from "./traits/Trait";
 import { Vector } from "./vectors";
 
+export enum Side {
+    top,
+    bottom
+}
+
 export default class Entity {
     public position: Vector;
     public velocity: Vector;
@@ -44,7 +49,7 @@ export default class Entity {
         this.traits.set(trait.name, trait);
     }
 
-    public obstruct(side: string): void {
+    public obstruct(side: Side): void {
         this.traits.forEach((trait) => {
             trait.obstruct(this, side);
         });

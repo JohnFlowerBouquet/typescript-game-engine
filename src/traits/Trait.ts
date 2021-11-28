@@ -1,4 +1,4 @@
-import Entity from "../Entity";
+import Entity, { Side } from "../Entity";
 
 export default class Trait {
     public name: string;
@@ -12,5 +12,5 @@ export default class Trait {
   
     public cancel(): void {}
 
-    public obstruct(entity: Entity, side: string): void {}
+    public obstruct(entity: Entity, side: Side): void {}
   }

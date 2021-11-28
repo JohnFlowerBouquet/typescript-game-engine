@@ -1,4 +1,4 @@
-import Entity from "./Entity";
+import Entity, { Side } from "./Entity";
 import Matrix from "./Matrix";
 import TileResolver from "./TileResolver";
 
@@ -70,13 +70,13 @@ export default class TileCollider {
                 if (entity.position.y + entity.size.y > match.y1) {
                     entity.position.y = match.y1 - entity.size.y;
                     entity.velocity.y = 0;
-                    entity.obstruct("bottom");
+                    entity.obstruct(Side.bottom);
                 }
             } else if (entity.velocity.y < 0) {
                 if (entity.position.y + entity.size.y > match.y2) {
                     entity.position.y = match.y2;
                     entity.velocity.y = 0;
-                    entity.obstruct("top");
+                    entity.obstruct(Side.top);
                 }
             }
         })
