@@ -1,4 +1,5 @@
 import Entity from "../Entity";
+import Jump from "./Jump";
 import Trait from "./Trait";
 
 export default class Walk extends Trait {
@@ -29,8 +30,14 @@ export default class Walk extends Trait {
         const absoluteX = Math.abs(entity.velocity.x);
         if (this._direction !== 0) {
             entity.velocity.x += this._acceleration * this._direction * deltaTime;
-            this._heading = this._direction;
-            this._distance += absoluteX * deltaTime;
+            const jumpTrait = entity.trait("jump") as Jump;
+            if (jumpTrait) {
+                if (jumpTrait.falling === false) {
+                    this._heading = this._direction;
+                }
+            } else {
+                this._heading = this._direction;
+            }
         } else if (entity.velocity.x !== 0) {
             const deceleration = Math.min(absoluteX, this._deceleration * deltaTime);
             entity.velocity.x += entity.velocity.x > 0 ? -deceleration : deceleration;
