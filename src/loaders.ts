@@ -1,4 +1,4 @@
-import { Position } from "./interface";
+import { Position, Animation } from "./interface";
 import SpriteSheet from "./SpriteSheet";
 import { getAnimationFrame } from "./utils/getAnimationFrame";
 
@@ -51,12 +51,6 @@ export function loadSpriteSheet(name: string): Promise<SpriteSheet> {
 
 export function loadJSON<T>(url: string): Promise<T> {
     return fetch(url).then((level) => level.json());
-}
-
-interface Animation {
-    name: string;
-    frameLength: number;
-    frames: string[];
 }
 
 interface Frame {

@@ -31,6 +31,10 @@ export default class Entity {
         this.getFrame = getFrame;
     }
 
+    public get animations() {
+        return this.spriteSheet.animations;
+    }
+
     public trait(traitName: string): Trait {
         const trait = this.traits.get(traitName);
         if (trait) {

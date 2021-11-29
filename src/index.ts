@@ -1,5 +1,5 @@
 import Camera from "./Camera";
-import { createMario } from "./entities/mario";
+import { loadMario } from "./entities/mario";
 import { setupKeyboard } from "./input";
 import { createCameraLayer, createCollisionLayer } from "./layers";
 import { loadLevel } from "./loaders/level";
@@ -14,10 +14,11 @@ function createCanvas() {
   const {canvas, context} = getCanvasWithContext(CANVAS_WIDTH, CANVAS_HEIGHT);
 
   Promise.all([
-    createMario(),
+    loadMario(),
     loadLevel('1'),
-  ]).then(([mario, level]) => {    
+  ]).then(([createMario, level]) => {    
     const camera = new Camera();
+    const mario = createMario();
 
     level.entities.add(mario);
 

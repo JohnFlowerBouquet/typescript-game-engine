@@ -1,10 +1,8 @@
 import Entity from "../Entity";
 import { loadSpriteSheet } from "../loaders";
+import SpriteSheet from "../SpriteSheet";
 import Jump from "../traits/Jump";
 import Walk from "../traits/Walk";
-import { getAnimationFrame } from "../utils/getAnimationFrame";
-
-const frames = ["run-1", "run-2", "run-3"];
 
 function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
     const walkTrait = entity.trait("walk") as Walk;
@@ -23,9 +21,10 @@ function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
                 isFlipped
             };
         }
-        const runAnimation = getAnimationFrame(frames, 6);
+
+        const runAnimation = entity.animations.get("run");
         return {
-            frameName: runAnimation(walkTrait.distance),
+            frameName: runAnimation ? runAnimation(walkTrait.distance) : "",
             isFlipped
         }
     } else {
@@ -36,14 +35,18 @@ function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
     }
 }
 
-export function createMario(): Promise<Entity> {
-    return loadSpriteSheet("mario").then(sprite => {
+export function loadMario(): Promise<() => Entity> {
+    return loadSpriteSheet("mario").then(sprite => createMarioFactory(sprite))
+}
+
+function createMarioFactory(sprite: SpriteSheet): () => Entity {
+    return function createMario() {
         const mario = new Entity(sprite, drawFunction);
         mario.size.set(16, 16);
         mario.addTrait(new Walk());
         mario.addTrait(new Jump());
         mario.position.set(64, 64);
 
-        return mario;
-    })
+    return mario;
+    }
 }
