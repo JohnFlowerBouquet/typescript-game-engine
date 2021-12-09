@@ -1,4 +1,4 @@
-import Entity from "../Entity";
+import Entity, { Side } from "../Entity";
 import Jump from "./Jump";
 import Trait from "./Trait";
 
@@ -9,9 +9,13 @@ export default class Walk extends Trait {
     private _distance = 0;
     private _heading = 1;
     private _dragFactor = 1/1000;
+    private _speed = 1;
+    private _obstructFunc?: (entity: Entity, side: Side) => void;
 
-    constructor() {
+    constructor(speed?: number, obstructFunc?: (entity: Entity, side: Side) => void) {
         super('walk');
+        this._obstructFunc = obstructFunc;
+        this._speed = speed ? speed : this._speed;
     }
 
     public get direction(): number {
@@ -29,7 +33,7 @@ export default class Walk extends Trait {
     public update(entity: Entity, deltaTime: number): void {
         const absoluteX = Math.abs(entity.velocity.x);
         if (this._direction !== 0) {
-            entity.velocity.x += this._acceleration * this._direction * deltaTime;
+            entity.velocity.x += this._acceleration * this._direction * deltaTime * this._speed;
             const jumpTrait = entity.trait("jump") as Jump;
             if (jumpTrait) {
                 if (jumpTrait.falling === false) {
@@ -57,5 +61,11 @@ export default class Walk extends Trait {
 
     public sprint(isOn: boolean): void {
         this._dragFactor = isOn ? 1/5000 : 1/1000;
+    }
+
+    public obstruct(entity: Entity, side: Side): void {
+        if (this._obstructFunc) {
+            this._obstructFunc(entity, side);
+        }
     }
 }

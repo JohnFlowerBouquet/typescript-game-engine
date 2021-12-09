@@ -4,7 +4,9 @@ import { Vector } from "./vectors";
 
 export enum Side {
     top,
-    bottom
+    bottom,
+    right,
+    left
 }
 
 export default class Entity {

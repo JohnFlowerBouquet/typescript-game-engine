@@ -1,5 +1,6 @@
 import Camera from "./Camera";
 import { loadMario } from "./entities/mario";
+import { loadGoomba } from "./entities/goomba";
 import { setupKeyboard } from "./input";
 import { createCameraLayer, createCollisionLayer } from "./layers";
 import { loadLevel } from "./loaders/level";
@@ -15,12 +16,15 @@ function createCanvas() {
 
   Promise.all([
     loadMario(),
+    loadGoomba(),
     loadLevel('1'),
-  ]).then(([createMario, level]) => {    
+  ]).then(([createMario, createGoomba, level]) => {    
     const camera = new Camera();
     const mario = createMario();
+    const goomba = createGoomba();
 
     level.entities.add(mario);
+    level.entities.add(goomba);
 
     const input = setupKeyboard(mario);
     input.listenTo();
