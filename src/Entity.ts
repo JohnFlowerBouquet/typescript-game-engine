@@ -1,3 +1,4 @@
+import HitBox from "./HitBox";
 import SpriteSheet from "./SpriteSheet";
 import Trait from "./traits/Trait";
 import { Vector } from "./vectors";
@@ -13,7 +14,9 @@ export default class Entity {
     public position: Vector;
     public velocity: Vector;
     public size: Vector;
+    public offset: Vector;
     public lifeTime = 0;
+    public hitBox: HitBox;
 
     private spriteSheet: SpriteSheet;
     private traits: Map<string, Trait>;
@@ -29,9 +32,11 @@ export default class Entity {
         this.position = new Vector(0, 0);
         this.velocity = new Vector(0, 0);
         this.size = new Vector(0, 0);
+        this.offset = new Vector(0, 0);
         this.spriteSheet = spriteSheet;
         this.traits = new Map();
         this.getFrame = getFrame;
+        this.hitBox = new HitBox(this.position, this.size, this.offset);
     }
 
     public get animations() {

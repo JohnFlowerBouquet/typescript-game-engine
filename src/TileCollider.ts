@@ -13,17 +13,17 @@ export default class TileCollider {
     public checkX(entity: Entity): void {
         let x: number;
         if (entity.velocity.x > 0) {
-            x = entity.position.x + entity.size.x;
+            x = entity.hitBox.right;
         } else if (entity.velocity.x < 0) {
-            x = entity.position.x;
+            x = entity.hitBox.left;
         } else {
             return;
         }
         const matches = this.tiles.searchByRange(
             x,
             x, 
-            entity.position.y,
-            entity.position.y + entity.size.y
+            entity.hitBox.top,
+            entity.hitBox.bottom
         );
         
         matches.forEach(match => {
@@ -32,14 +32,14 @@ export default class TileCollider {
             }
     
             if (entity.velocity.x > 0) {
-                if (entity.position.x + entity.size.x > match.x1) {
-                    entity.position.x = match.x1 - entity.size.x;
+                if (entity.hitBox.right > match.x1) {
+                    entity.hitBox.right = match.x1;
                     entity.velocity.x = 0;
                     entity.obstruct(Side.right);
                 }
             } else if (entity.velocity.x < 0) {
-                if (entity.position.x + entity.size.x > match.x2) {
-                    entity.position.x = match.x2;
+                if (entity.hitBox.left < match.x2) {
+                    entity.hitBox.left = match.x2;
                     entity.velocity.x = 0;
                     entity.obstruct(Side.left);
                 }
@@ -50,15 +50,15 @@ export default class TileCollider {
     public checkY(entity: Entity): void {
         let y: number;
         if (entity.velocity.y > 0) {
-            y = entity.position.y + entity.size.y;
+            y = entity.hitBox.bottom;
         } else if (entity.velocity.y < 0) {
-            y = entity.position.y;
+            y = entity.hitBox.top;
         } else {
             return;
         }
         const matches = this.tiles.searchByRange(
-            entity.position.x,
-            entity.position.x + entity.size.x, 
+            entity.hitBox.left,
+            entity.hitBox.right, 
             y,
             y
         );
@@ -69,14 +69,14 @@ export default class TileCollider {
             }
     
             if (entity.velocity.y > 0) {
-                if (entity.position.y + entity.size.y > match.y1) {
-                    entity.position.y = match.y1 - entity.size.y;
+                if (entity.hitBox.bottom > match.y1) {
+                    entity.hitBox.bottom = match.y1;
                     entity.velocity.y = 0;
                     entity.obstruct(Side.bottom);
                 }
             } else if (entity.velocity.y < 0) {
-                if (entity.position.y + entity.size.y > match.y2) {
-                    entity.position.y = match.y2;
+                if (entity.hitBox.top  < match.y2) {
+                    entity.hitBox.top = match.y2;
                     entity.velocity.y = 0;
                     entity.obstruct(Side.top);
                 }

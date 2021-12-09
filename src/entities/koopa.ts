@@ -20,6 +20,7 @@ function createKoopaFactory(sprite: SpriteSheet): () => Entity {
     return function createKoopa() {
         const koopa = new Entity(sprite, drawFunction);
         koopa.size.set(16, 24);
+        koopa.offset.y = 8;
         koopa.addTrait(new PendulumWalk());
         koopa.position.set(128, 64);
 

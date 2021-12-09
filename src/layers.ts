@@ -114,10 +114,10 @@ export function createCollisionLayer(level: Level): Layer {
         level.entities.forEach((entity) => {
             context.beginPath();
             context.rect(
-                entity.position.x - camera.position.x,
-                entity.position.y - camera.position.y,
-                entity.size.x,
-                entity.size.y
+                entity.hitBox.left - camera.position.x,
+                entity.hitBox.top - camera.position.y,
+                entity.size.x - entity.offset.x,
+                entity.size.y - entity.offset.y
             );
             context.stroke();
         });
