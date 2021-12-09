@@ -9,7 +9,7 @@ import { setupMouseControl } from "./utils/debug";
 import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 
 export const CANVAS_WIDTH = 256 + 16;
-export const CANVAS_HEIGHT = 640;
+export const CANVAS_HEIGHT = 256;
 
 function createCanvas() {
   const {canvas, context} = getCanvasWithContext(CANVAS_WIDTH, CANVAS_HEIGHT);
