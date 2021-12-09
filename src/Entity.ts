@@ -13,6 +13,7 @@ export default class Entity {
     public position: Vector;
     public velocity: Vector;
     public size: Vector;
+    public lifeTime = 0;
 
     private spriteSheet: SpriteSheet;
     private traits: Map<string, Trait>;
@@ -20,7 +21,7 @@ export default class Entity {
         frameName: string;
         isFlipped: boolean;
     };
-
+    
     constructor(
         spriteSheet: SpriteSheet,
         getFrame: (entity: Entity) => { frameName: string; isFlipped: boolean }
@@ -65,5 +66,6 @@ export default class Entity {
         this.traits.forEach((trait) => {
             trait.update(this, deltaTime);
         });
+        this.lifeTime += deltaTime;
     }
 }

@@ -7,6 +7,7 @@ import { loadLevel } from "./loaders/level";
 import Timer from "./Timer";
 import { setupMouseControl } from "./utils/debug";
 import { getCanvasWithContext } from "./utils/getCanvasWithContext";
+import { loadKoopa } from "./entities/koopa";
 
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
@@ -17,14 +18,17 @@ function createCanvas() {
   Promise.all([
     loadMario(),
     loadGoomba(),
+    loadKoopa(),
     loadLevel('1'),
-  ]).then(([createMario, createGoomba, level]) => {    
+  ]).then(([createMario, createGoomba, createKoopa, level]) => {    
     const camera = new Camera();
     const mario = createMario();
     const goomba = createGoomba();
+    const koopa = createKoopa();
 
     level.entities.add(mario);
     level.entities.add(goomba);
+    level.entities.add(koopa);
 
     const input = setupKeyboard(mario);
     input.listenTo();

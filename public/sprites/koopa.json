@@ -1,19 +1,15 @@
 {
     "url": "/assets/characters.gif",
     "width": 16,
-    "height": 16,
+    "height": 24,
     "frames": [
         {
             "name": "walk-1",
-            "rect": [296, 187, 16, 16]
+            "rect": [296, 206, 16, 24]
         },
         {
             "name": "walk-2",
-            "rect": [315, 187, 16, 16]
-        },
-        {
-            "name": "flat",
-            "rect": [277, 43, 16, 16]
+            "rect": [315, 206, 16, 24]
         }
     ],
     "animations": [
