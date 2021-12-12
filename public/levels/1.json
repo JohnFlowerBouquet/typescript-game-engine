@@ -17,5 +17,15 @@
         ["ground","ground","ground","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky","sky","pipe-insert-vert-left", "pipe-insert-vert-right","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground"],
         ["ground","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky","sky","pipe-vert-left", "pipe-vert-right","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground", "ground","sky","sky","sky","sky","sky","sky","sky","sky","ground"],
         ["ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground","ground"]
+    ],
+    "entities": [
+        {
+            "name": "koopa",
+            "position": [128, 160]
+        },
+        {
+            "name": "goomba",
+            "position": [128, 64]
+        }
     ]
 }

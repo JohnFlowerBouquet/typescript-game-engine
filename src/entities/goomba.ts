@@ -21,8 +21,6 @@ function createGoombaFactory(sprite: SpriteSheet): () => Entity {
         const goomba = new Entity(sprite, drawFunction);
         goomba.size.set(16, 16);
         goomba.addTrait(new PendulumWalk());
-        goomba.position.set(96, 64);
-
     return goomba;
     }
 }

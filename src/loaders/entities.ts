@@ -4,9 +4,12 @@ import { loadMario } from "../entities/mario";
 import Entity from "../Entity";
 
 type LoadEntity = () => Entity;
+ export interface EntityFactory {
+    [key: string]: LoadEntity
+}
 
-export function loadEntities(): Promise<{[key: string]: LoadEntity}> {
-    const entityFactories: {[key: string]: LoadEntity} = {};
+export function loadEntities(): Promise<EntityFactory> {
+    const entityFactories: EntityFactory = {};
 
     function addAs(name: string): (factory: LoadEntity) => void {
         return (factory: LoadEntity) => entityFactories[name] = factory;
