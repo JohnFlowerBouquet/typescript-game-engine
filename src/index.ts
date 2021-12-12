@@ -10,41 +10,42 @@ import { loadEntities } from "./loaders/entities";
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
 
-function createCanvas(): HTMLCanvasElement {
-  const {canvas, context} = getCanvasWithContext(CANVAS_WIDTH, CANVAS_HEIGHT);
+async function main(): Promise<void> {
+    const { canvas, context } = getCanvasWithContext(
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT
+    );
 
-  loadEntities().then(entityFactory => Promise.all([
-    loadEntities(),
-    createLevelLoader(entityFactory)('1'),
-  ]).then(([entity, level]) => {    
+    const entityFactory = await loadEntities();
+    const loadLevel = createLevelLoader(entityFactory);
+    const level = await loadLevel("1");
+
     const camera = new Camera();
-    const mario = entity["mario"]();
-
+    const mario = entityFactory["mario"]();
     level.entities.add(mario);
 
     const input = setupKeyboard(mario);
     input.listenTo();
 
-    if (process.env.NODE_ENV !== 'production') {
-      setupMouseControl(canvas, mario, camera);
-      level.compositor.addLayer(createCollisionLayer(level));
-      level.compositor.addLayer(createCameraLayer(camera));
+    if (process.env.NODE_ENV !== "production") {
+        setupMouseControl(canvas, mario, camera);
+        level.compositor.addLayer(createCollisionLayer(level));
+        level.compositor.addLayer(createCameraLayer(camera));
     }
 
     const timer = new Timer();
     timer.updateFunction = (deltaTime) => {
-      level.update(deltaTime);
-      level.compositor.draw(context, camera);
-      
-      if (mario.position.x > 100) {
-        camera.position.x = mario.position.x - 100;
-      }
-    }
+        level.update(deltaTime);
+        level.compositor.draw(context, camera);
+
+        if (mario.position.x > 100) {
+            camera.position.x = mario.position.x - 100;
+        }
+    };
 
     timer.start();
-  }))
-  
-  return canvas;
+
+    document.body.appendChild(canvas);
 }
 
-document.body.appendChild(createCanvas());
+main();
