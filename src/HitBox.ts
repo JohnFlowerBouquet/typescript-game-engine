@@ -7,6 +7,15 @@ export default class HitBox {
         private _offset: Vector
     ) {}
 
+    public overlaps(hitBox: HitBox): boolean {
+        return (
+            this.bottom > hitBox.top &&
+            this.top < hitBox.bottom &&
+            this.left < hitBox.right &&
+            this.right > hitBox.left
+        );
+    }
+
     public get top() {
         return this._position.y + this._offset.y;
     }

@@ -1,4 +1,5 @@
 import HitBox from "./HitBox";
+import Level from "./Level";
 import SpriteSheet from "./SpriteSheet";
 import Trait from "./traits/Trait";
 import { Vector } from "./vectors";
@@ -52,6 +53,11 @@ export default class Entity {
         }
     }
 
+    public hasTrait(traitName: string): boolean {
+        const trait = this.traits.get(traitName);
+        return !!trait;
+    }
+
     public draw(context: CanvasRenderingContext2D): void {
         const { frameName, isFlipped } = this.getFrame(this);
         this.spriteSheet.draw(frameName, context, 0, 0, isFlipped);
@@ -67,9 +73,15 @@ export default class Entity {
         });
     }
 
-    public update(deltaTime: number): void {
+    public collides(collidingCandidate: Entity): void {
         this.traits.forEach((trait) => {
-            trait.update(this, deltaTime);
+            trait.collides(this, collidingCandidate);
+        });
+    }
+
+    public update(deltaTime: number, level: Level): void {
+        this.traits.forEach((trait) => {
+            trait.update(this, deltaTime, level);
         });
         this.lifeTime += deltaTime;
     }

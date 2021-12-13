@@ -13,4 +13,6 @@ export default class Trait {
     public cancel(): void {}
 
     public obstruct(entity: Entity, side: Side): void {}
+
+    public collides(entity: Entity, collidingEntity: Entity): void {}
   }
