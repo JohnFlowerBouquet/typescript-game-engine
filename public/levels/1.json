@@ -21,7 +21,7 @@
     "entities": [
         {
             "name": "koopa",
-            "position": [128, 160]
+            "position": [64, 160]
         },
         {
             "name": "goomba",
