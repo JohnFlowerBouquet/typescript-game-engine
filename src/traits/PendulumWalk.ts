@@ -6,6 +6,10 @@ export default class PendulumWalk extends Trait {
         super('pendulumWalk');
     }
 
+    public set speed(speed: number) {
+        this._speed = speed;
+    }
+
     public update(entity: Entity, deltaTime: number): void {
         entity.velocity.x = this._speed;
     }

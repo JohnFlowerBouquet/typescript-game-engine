@@ -2,6 +2,7 @@ import Entity from "../Entity";
 import { loadSpriteSheet } from "../loaders";
 import SpriteSheet from "../SpriteSheet";
 import Jump from "../traits/Jump";
+import Stomper from "../traits/Stomper";
 import Walk from "../traits/Walk";
 
 function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
@@ -45,6 +46,7 @@ function createMarioFactory(sprite: SpriteSheet): () => Entity {
         mario.size.set(16, 16);
         mario.addTrait(new Walk());
         mario.addTrait(new Jump());
+        mario.addTrait(new Stomper());
         mario.position.set(64, 64);
 
     return mario;
