@@ -24,7 +24,7 @@ export default class Level {
 
     public update(deltaTime: number): void {
         this.entities.forEach(entity => {
-            entity.update(deltaTime);
+            entity.update(deltaTime, this);
 
             entity.position.x += entity.velocity.x * deltaTime;
             this.tileCollider.checkX(entity);

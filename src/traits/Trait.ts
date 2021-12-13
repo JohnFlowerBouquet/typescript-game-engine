@@ -1,4 +1,5 @@
 import Entity, { Side } from "../Entity";
+import Level from "../Level";
 
 export default class Trait {
     public name: string;
@@ -6,7 +7,7 @@ export default class Trait {
       this.name = name;
     }
   
-    public update(entity: Entity, deltaTime: number): void {}
+    public update(entity: Entity, deltaTime: number, level: Level): void {}
   
     public start(params?: any): void {}
   
