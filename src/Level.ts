@@ -32,10 +32,13 @@ export default class Level {
             entity.position.y += entity.velocity.y * deltaTime;
             this.tileCollider.checkY(entity);
 
-            this._entityCollider.check(entity);
-
             entity.velocity.y += this.gravity * deltaTime;
         })
+
+        this.entities.forEach(entity => {
+            this._entityCollider.check(entity);
+        })
+        
         this.totalTime += deltaTime;
     }
 }

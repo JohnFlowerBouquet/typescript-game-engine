@@ -2,6 +2,7 @@ import Entity from "../Entity";
 import { loadSpriteSheet } from "../loaders";
 import SpriteSheet from "../SpriteSheet";
 import Jump from "../traits/Jump";
+import Killable from "../traits/Killable";
 import Stomper from "../traits/Stomper";
 import Walk from "../traits/Walk";
 
@@ -47,6 +48,7 @@ function createMarioFactory(sprite: SpriteSheet): () => Entity {
         mario.addTrait(new Walk());
         mario.addTrait(new Jump());
         mario.addTrait(new Stomper());
+        mario.addTrait(new Killable());
         mario.position.set(64, 64);
 
     return mario;
