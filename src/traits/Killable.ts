@@ -16,6 +16,10 @@ export default class Killable extends Trait {
         this.isDead = true;
     }
 
+    public revive(): void {
+        this.isDead = false;
+    }
+
     public update(entity: Entity, deltaTime: number, level: Level): void {
         if (this.isDead) {
             this._deadTime += deltaTime;
