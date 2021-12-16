@@ -14,14 +14,11 @@ export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
 
 function createPlayerEnv(playerEntity: Entity): Entity {
-    const { canvas, context } = getCanvasWithContext(
-        0,
-        0
-    );
     const imageStub = new Image();
     const playerEnv = new Entity(new SpriteSheet(imageStub, 0, 0), () => ({frameName: "", isFlipped: false}));
     const playerController = new PlayerController();
     playerController.setPlayer(playerEntity);
+    playerController.setCheckpoint(64, 64);
     playerEnv.addTrait(playerController);
     return playerEnv;
 }
@@ -38,7 +35,6 @@ async function main(): Promise<void> {
 
     const camera = new Camera();
     const mario = entityFactory["mario"]();
-    level.entities.add(mario);
 
     const playerEnv = createPlayerEnv(mario);
     level.entities.add(playerEnv);
