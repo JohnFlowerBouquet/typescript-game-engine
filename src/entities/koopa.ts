@@ -30,7 +30,7 @@ class Behavior extends Trait {
                 this.handleStomp(entity, collidingEntity);
             } else {
                 const collidingKillableTrait = collidingEntity.trait("killable") as Killable;
-                collidingKillableTrait.kill();
+                collidingKillableTrait.kill(collidingEntity);
             }
         }
     }

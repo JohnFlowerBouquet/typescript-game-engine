@@ -12,7 +12,8 @@ export default class Killable extends Trait {
         super('killable');
     }
 
-    public kill(): void {
+    public kill(entity: Entity): void {
+        entity.velocity.x = 0;
         this.isDead = true;
     }
 

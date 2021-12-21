@@ -22,7 +22,7 @@ class Behavior extends Trait {
                 killableTrait.kill(entity);
             } else {
                 const collidingKillableTrait = collidingEntity.trait("killable") as Killable;
-                collidingKillableTrait.kill();
+                collidingKillableTrait.kill(collidingEntity);
             }
         }
     }
