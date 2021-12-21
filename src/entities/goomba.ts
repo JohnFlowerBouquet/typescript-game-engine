@@ -22,7 +22,7 @@ class Behavior extends Trait {
             const stomper = collidingEntity.trait("stomper") as Stomper;
             if (collidingEntity.velocity.y > entity.velocity.y) {
                 stomper.bounce();
-                pendulumWalk.speed = 0;
+                pendulumWalk.enabled = false;
                 killableTrait.kill();
             } else {
                 const collidingKillableTrait = collidingEntity.trait("killable") as Killable;

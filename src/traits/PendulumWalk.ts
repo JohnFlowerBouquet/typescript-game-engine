@@ -2,6 +2,8 @@ import Entity, { Side } from "../Entity";
 import Trait from "./Trait";
 
 export default class PendulumWalk extends Trait {
+    public enabled = true;
+    
     constructor(private _speed: number = 30) {
         super('pendulumWalk');
     }
@@ -11,7 +13,9 @@ export default class PendulumWalk extends Trait {
     }
 
     public update(entity: Entity, deltaTime: number): void {
-        entity.velocity.x = this._speed;
+        if (this.enabled) {
+            entity.velocity.x = this._speed;
+        }
     }
 
     public obstruct(entity: Entity, side: Side): void {

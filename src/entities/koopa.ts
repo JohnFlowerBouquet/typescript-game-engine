@@ -48,14 +48,14 @@ class Behavior extends Trait {
     public hide(entity: Entity): void {
         entity.velocity.x = 0;
         const pendulumWalk = entity.trait("pendulumWalk") as PendulumWalk;
-        pendulumWalk.speed = 0;
+        pendulumWalk.enabled = false;
         this._state = KoopaState.hiding;
         this._hidingTime = 0;
     }
 
     public reveal(entity: Entity): void {
         const pendulumWalk = entity.trait("pendulumWalk") as PendulumWalk;
-        pendulumWalk.speed = 100;
+        pendulumWalk.enabled = true;
         this._state = KoopaState.walking;
     }
 
