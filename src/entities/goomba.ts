@@ -3,7 +3,6 @@ import { loadSpriteSheet } from "../loaders";
 import SpriteSheet from "../SpriteSheet";
 import Killable from "../traits/Killable";
 import PendulumWalk from "../traits/PendulumWalk";
-import Stomper from "../traits/Stomper";
 import Trait from "../traits/Trait";
 
 class Behavior extends Trait {
@@ -17,13 +16,10 @@ class Behavior extends Trait {
             return;
         }
         const pendulumWalk = entity.trait("pendulumWalk") as PendulumWalk;
-        const collidingWithStomper = collidingEntity.hasTrait("stomper");
-        if (collidingWithStomper) {
-            const stomper = collidingEntity.trait("stomper") as Stomper;
+        if (collidingEntity.hasTrait("stomper")) {
             if (collidingEntity.velocity.y > entity.velocity.y) {
-                stomper.bounce();
                 pendulumWalk.enabled = false;
-                killableTrait.kill();
+                killableTrait.kill(entity);
             } else {
                 const collidingKillableTrait = collidingEntity.trait("killable") as Killable;
                 collidingKillableTrait.kill();

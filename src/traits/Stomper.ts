@@ -2,21 +2,20 @@ import Entity from "../Entity";
 import Trait from "./Trait";
 
 export default class Stomper extends Trait {
-    private _queueBounce = false;
     private _speed = 400;
 
     constructor() {
         super('stomper');
     }
 
-    public bounce(): void {
-        this._queueBounce = true;
+    public collides(entity: Entity, collidingEntity: Entity): void {
+        if (collidingEntity.hasTrait("killable") && entity.velocity.y > collidingEntity.velocity.y) {
+            this._bounce(entity, collidingEntity);
+        }
     }
 
-    public update(entity: Entity, deltaTime: number): void {
-        if (this._queueBounce) {
-            entity.velocity.y = -this._speed;
-            this._queueBounce = false;
-        }
+    private _bounce(entity: Entity, collidingEntity: Entity): void {
+        entity.hitBox.bottom = collidingEntity.hitBox.top;
+        entity.velocity.y = -this._speed;
     }
 }
