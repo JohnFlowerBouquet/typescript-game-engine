@@ -15,6 +15,7 @@ class Behavior extends Trait {
     private _hidingTime = 0;
     private _state = KoopaState.walking
     private _hidingDuration = 5;
+    private _rollingSpeed = 300;
 
     constructor() {
         super("behavior");
@@ -29,15 +30,33 @@ class Behavior extends Trait {
             if (collidingEntity.velocity.y > entity.velocity.y) {
                 this.handleStomp(entity, collidingEntity);
             } else {
-                const collidingKillableTrait = collidingEntity.trait("killable") as Killable;
-                collidingKillableTrait.kill(collidingEntity);
+                this.handleNudge(entity, collidingEntity);                
             }
+        }
+    }
+
+    public handleNudge(entity: Entity, nudgingEntity: Entity): void {
+        if (this._state === KoopaState.walking) {
+            const collidingKillableTrait = nudgingEntity.trait("killable") as Killable;
+            collidingKillableTrait.kill(nudgingEntity);
+        } else {
+            const pendulumWalk = entity.trait("pendulumWalk") as PendulumWalk;
+            pendulumWalk.enabled = true;
+            pendulumWalk.speed = this._rollingSpeed * Math.sign(nudgingEntity.velocity.x);
+            const killableTrait = entity.trait("killable") as Killable;
+            killableTrait.kill(entity);
         }
     }
 
     public handleStomp(entity: Entity, stompingEntity: Entity): void {
         if (this._state === KoopaState.walking) {
             this.hide(entity);
+        } else if (this._state === KoopaState.hiding) {
+            const pendulumWalk = entity.trait("pendulumWalk") as PendulumWalk;
+            pendulumWalk.enabled = true;
+            pendulumWalk.speed = this._rollingSpeed * Math.sign(stompingEntity.velocity.x);
+            const killableTrait = entity.trait("killable") as Killable;
+            killableTrait.kill(entity);
         }
     }
 
