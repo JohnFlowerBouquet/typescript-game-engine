@@ -12,7 +12,8 @@ enum KoopaState {
 }
 
 class Behavior extends Trait {
-    private _hidingTime = 0;
+    public hidingTime = 0;
+    
     private _state = KoopaState.walking
     private _hidingDuration = 5;
     private _rollingSpeed = 300;
@@ -65,7 +66,7 @@ class Behavior extends Trait {
         const pendulumWalk = entity.trait("pendulumWalk") as PendulumWalk;
         pendulumWalk.enabled = false;
         this._state = KoopaState.hiding;
-        this._hidingTime = 0;
+        this.hidingTime = 0;
     }
 
     public reveal(entity: Entity): void {
@@ -80,8 +81,8 @@ class Behavior extends Trait {
 
     public update(entity: Entity, deltaTime: number, level: Level): void {
         if (this._state === KoopaState.hiding) {
-            this._hidingTime += deltaTime;
-            if (this._hidingTime > this._hidingDuration) {
+            this.hidingTime += deltaTime;
+            if (this.hidingTime > this._hidingDuration) {
                 this.reveal(entity);
             }
         }
@@ -91,9 +92,16 @@ class Behavior extends Trait {
 function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
     const isFlipped = entity.velocity.x < 0;
     const walkAnimation = entity.animations.get("walk");
+    const wakeAnimation = entity.animations.get("wake");
 
     const killableTrait = entity.trait("behavior") as Behavior;
     if (killableTrait.isHiding()) {
+        if (killableTrait.hidingTime > 3) {
+            return {
+                frameName: wakeAnimation ?  wakeAnimation(entity.lifeTime) : "",
+                isFlipped
+            }
+        }
         return {
             frameName: "hiding",
             isFlipped
