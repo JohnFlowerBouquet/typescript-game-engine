@@ -38,6 +38,8 @@ export default class Level {
         this.entities.forEach(entity => {
             this._entityCollider.check(entity);
         })
+
+        this.entities.forEach(entity => entity.runQueuedTasks());
         
         this.totalTime += deltaTime;
     }

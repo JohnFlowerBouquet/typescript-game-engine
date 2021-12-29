@@ -85,4 +85,8 @@ export default class Entity {
         });
         this.lifeTime += deltaTime;
     }
+
+    public runQueuedTasks(): void {
+        this.traits.forEach(trait => trait.runTasks());
+    }
 }
