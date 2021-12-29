@@ -14,7 +14,7 @@ export default class Killable extends Trait {
 
     public kill(entity: Entity): void {
         entity.velocity.x = 0;
-        this.isDead = true;
+        this.queue(() => this.isDead = true)
     }
 
     public revive(): void {

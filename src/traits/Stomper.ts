@@ -1,4 +1,5 @@
 import Entity from "../Entity";
+import Killable from "./Killable";
 import Trait from "./Trait";
 
 export default class Stomper extends Trait {
@@ -9,7 +10,12 @@ export default class Stomper extends Trait {
     }
 
     public collides(entity: Entity, collidingEntity: Entity): void {
-        if (collidingEntity.hasTrait("killable") && entity.velocity.y > collidingEntity.velocity.y) {
+        const killableTrait = collidingEntity.trait("killable") as Killable;
+        if (!killableTrait || killableTrait.isDead ) {
+            return;
+        }
+
+        if (entity.velocity.y > collidingEntity.velocity.y) {
             this._bounce(entity, collidingEntity);
         }
     }
