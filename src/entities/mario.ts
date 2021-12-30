@@ -3,6 +3,8 @@ import { loadSpriteSheet } from "../loaders";
 import SpriteSheet from "../SpriteSheet";
 import Jump from "../traits/Jump";
 import Killable from "../traits/Killable";
+import Physics from "../traits/Physics";
+import Solid from "../traits/Solid";
 import Stomper from "../traits/Stomper";
 import Walk from "../traits/Walk";
 
@@ -45,6 +47,8 @@ function createMarioFactory(sprite: SpriteSheet): () => Entity {
     return function createMario() {
         const mario = new Entity(sprite, drawFunction);
         mario.size.set(16, 16);
+        mario.addTrait(new Physics());
+        mario.addTrait(new Solid());
         mario.addTrait(new Walk());
         mario.addTrait(new Jump());
         mario.addTrait(new Stomper());

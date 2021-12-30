@@ -4,6 +4,8 @@ import { loadSpriteSheet } from "../loaders";
 import SpriteSheet from "../SpriteSheet";
 import Killable from "../traits/Killable";
 import PendulumWalk from "../traits/PendulumWalk";
+import Physics from "../traits/Physics";
+import Solid from "../traits/Solid";
 import Trait from "../traits/Trait";
 
 enum KoopaState {
@@ -122,6 +124,8 @@ function createKoopaFactory(sprite: SpriteSheet): () => Entity {
         const koopa = new Entity(sprite, drawFunction);
         koopa.size.set(16, 24);
         koopa.offset.y = 8;
+        koopa.addTrait(new Physics());
+        koopa.addTrait(new Solid());
         koopa.addTrait(new PendulumWalk());
         koopa.addTrait(new Behavior());
         koopa.addTrait(new Killable());
