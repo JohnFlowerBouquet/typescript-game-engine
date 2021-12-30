@@ -3,6 +3,7 @@ import { TILE_SIZE } from "./globals";
 import Matrix from "./Matrix";
 import SpriteSheet from "./SpriteSheet";
 import TileCollider from "./TileCollider";
+import Solid from "./traits/Solid";
 
  function getMockMatrixWithEntity(): {matrix: Matrix, entity: Entity} {
     const matrix = new Matrix();
@@ -28,6 +29,7 @@ import TileCollider from "./TileCollider";
     const imageStub = new Image();
     const spritesheet = new SpriteSheet(imageStub, 0, 0);
     const entity = new Entity(spritesheet, () => ({frameName: "", isFlipped: false}));
+    entity.addTrait(new Solid());
     entity.velocity.x = 0;
     entity.position.x = 32;
     entity.position.y = 64;
