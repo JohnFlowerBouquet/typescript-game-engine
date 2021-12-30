@@ -1,5 +1,6 @@
 import Entity, { Side } from "../Entity";
 import Level from "../Level";
+import { Tile } from "../Matrix";
 
 type Task = () => void;
 export default class Trait {
@@ -16,7 +17,7 @@ export default class Trait {
 
     public cancel(): void {}
 
-    public obstruct(entity: Entity, side: Side): void {}
+    public obstruct(entity: Entity, side: Side, match: Tile): void {}
 
     public collides(entity: Entity, collidingEntity: Entity): void {}
 

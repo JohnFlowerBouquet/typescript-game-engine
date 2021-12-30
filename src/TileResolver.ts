@@ -39,13 +39,6 @@ export default class TileResolver {
         };
     }
 
-    public searchByPosition(x: number, y: number): Tile {
-        return this.getByIndex(
-            this.toIndex(x),
-            this.toIndex(y)
-        )
-    }
-
     public searchByRange(x1: number, x2: number, y1: number, y2: number): Tile[] {
         const matches: Tile[] = [];
         this.toIndexRange(x1, x2).forEach(indexX => {

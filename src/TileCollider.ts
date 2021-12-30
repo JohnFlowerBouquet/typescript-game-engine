@@ -33,15 +33,11 @@ export default class TileCollider {
     
             if (entity.velocity.x > 0) {
                 if (entity.hitBox.right > match.x1) {
-                    entity.hitBox.right = match.x1;
-                    entity.velocity.x = 0;
-                    entity.obstruct(Side.right);
+                    entity.obstruct(Side.right, match);
                 }
             } else if (entity.velocity.x < 0) {
                 if (entity.hitBox.left < match.x2) {
-                    entity.hitBox.left = match.x2;
-                    entity.velocity.x = 0;
-                    entity.obstruct(Side.left);
+                    entity.obstruct(Side.left, match);
                 }
             }
         })
@@ -70,15 +66,11 @@ export default class TileCollider {
     
             if (entity.velocity.y > 0) {
                 if (entity.hitBox.bottom > match.y1) {
-                    entity.hitBox.bottom = match.y1;
-                    entity.velocity.y = 0;
-                    entity.obstruct(Side.bottom);
+                    entity.obstruct(Side.bottom, match);
                 }
             } else if (entity.velocity.y < 0) {
                 if (entity.hitBox.top  < match.y2) {
-                    entity.hitBox.top = match.y2;
-                    entity.velocity.y = 0;
-                    entity.obstruct(Side.top);
+                    entity.obstruct(Side.top, match);
                 }
             }
         })

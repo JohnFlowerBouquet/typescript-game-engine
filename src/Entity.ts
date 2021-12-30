@@ -1,5 +1,6 @@
 import HitBox from "./HitBox";
 import Level from "./Level";
+import { Tile } from "./Matrix";
 import SpriteSheet from "./SpriteSheet";
 import Trait from "./traits/Trait";
 import { Vector } from "./vectors";
@@ -67,9 +68,9 @@ export default class Entity {
         this.traits.set(trait.name, trait);
     }
 
-    public obstruct(side: Side): void {
+    public obstruct(side: Side, match: Tile): void {
         this.traits.forEach((trait) => {
-            trait.obstruct(this, side);
+            trait.obstruct(this, side, match);
         });
     }
 
