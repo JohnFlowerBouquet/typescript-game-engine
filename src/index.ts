@@ -10,6 +10,8 @@ import SpriteSheet from "./SpriteSheet";
 import PlayerController from "./traits/PlayerController";
 import { createCollisionLayer } from "./layers/collision";
 import { createCameraLayer } from "./layers/camera";
+import { loadFont } from "./font";
+import { createDashboardLayer } from "./layers/dashboard";
 
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
@@ -31,8 +33,11 @@ async function main(): Promise<void> {
     );
 
     const entityFactory = await loadEntities();
+    const font = await loadFont();
+
     const loadLevel = createLevelLoader(entityFactory);
     const level = await loadLevel("1");
+    level.compositor.addLayer(createDashboardLayer(font));
 
     const camera = new Camera();
     const mario = entityFactory["mario"]();
