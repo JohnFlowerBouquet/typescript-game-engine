@@ -1,7 +1,7 @@
 import Camera from "../Camera";
 import Entity from "../Entity";
-import { Layer } from "../layers";
 import { getCanvasWithContext } from "../utils/getCanvasWithContext";
+import { Layer } from "./layer.interface";
 
 export function createSpriteLayer(
     entities: Set<Entity>,

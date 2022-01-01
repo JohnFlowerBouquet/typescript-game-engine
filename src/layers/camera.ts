@@ -1,5 +1,5 @@
 import Camera from "../Camera";
-import { Layer } from "../layers";
+import { Layer } from "./layer.interface";
 
 export function createCameraLayer(camera: Camera): Layer {
     return function drawCameraRect(

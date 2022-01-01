@@ -1,8 +1,8 @@
 import Camera from "../Camera";
 import { TILE_SIZE } from "../globals";
-import { Layer } from "../layers";
 import Level from "../Level";
 import Matrix from "../Matrix";
+import { Layer } from "./layer.interface";
 
 export function createCollisionLayer(level: Level): Layer {
     const tileResolver = level.tileCollider.tiles;

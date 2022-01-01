@@ -1,9 +1,9 @@
 import Camera from "../Camera";
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../index";
-import { Layer } from "../layers";
 import Level from "../Level";
 import SpriteSheet from "../SpriteSheet";
 import { getCanvasWithContext } from "../utils/getCanvasWithContext";
+import { Layer } from "./layer.interface";
 
 export function createBackgroundLayer(
     level: Level,
