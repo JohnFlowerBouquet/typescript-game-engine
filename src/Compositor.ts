@@ -1,5 +1,5 @@
 import Camera from "./Camera";
-import { Layer } from "./layers";
+import { Layer } from "./layers/layer.interface";
 
 export default class Compositor {
     private layers: Array<Layer>;
