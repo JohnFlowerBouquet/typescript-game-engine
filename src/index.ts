@@ -1,6 +1,6 @@
 import Camera from "./Camera";
 import { setupKeyboard } from "./input";
-import { createCameraLayer, createCollisionLayer } from "./layers";
+import { createCameraLayer } from "./layers";
 import { createLevelLoader } from "./loaders/level";
 import Timer from "./Timer";
 import { setupMouseControl } from "./utils/debug";
@@ -9,6 +9,7 @@ import { loadEntities } from "./loaders/entities";
 import Entity from "./Entity";
 import SpriteSheet from "./SpriteSheet";
 import PlayerController from "./traits/PlayerController";
+import { createCollisionLayer } from "./layers/collision";
 
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
