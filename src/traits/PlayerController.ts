@@ -7,6 +7,11 @@ import Trait from "./Trait";
 export default class PlayerController extends Trait {
     private _player?: Entity;
     private _checkpoint = new Vector(0, 0);
+    private _time = 300;
+
+    public get time(): number {
+        return this._time;
+    }
 
     constructor() {
         super('playerController');
@@ -26,6 +31,8 @@ export default class PlayerController extends Trait {
             killableTrait.revive();
             this._player.position.set(this._checkpoint.x, this._checkpoint.y);
             level.entities.add(this._player);
+        } else {
+            this._time -= deltaTime;
         }
     }
 }

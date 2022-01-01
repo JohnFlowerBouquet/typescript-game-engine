@@ -7,6 +7,10 @@ export class Font {
     private _spriteSheet: SpriteSheet
     private _size: number;
 
+    public get size(): number {
+        return this._size;
+    }
+
     constructor(sprites: SpriteSheet, size: number) {
         this._spriteSheet = sprites;
         this._size = size;
