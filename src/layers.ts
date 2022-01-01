@@ -1,34 +1,9 @@
 import Camera from "./Camera";
-import Entity from "./Entity";
 import { TILE_SIZE } from "./globals";
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./index";
 import Level from "./Level";
 import Matrix from "./Matrix";
-import SpriteSheet from "./SpriteSheet";
-import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 
 export type Layer = (context: CanvasRenderingContext2D, camera: Camera) => void;
-
-
-export function createSpriteLayer(
-    entities: Set<Entity>,
-    width = 64,
-    height = 64
-): Layer {
-    const { canvas: spriteBuffer, context: spriteBufferContext } =
-        getCanvasWithContext(width, height);
-
-    return (context: CanvasRenderingContext2D, camera: Camera) =>
-        entities.forEach((entity) => {
-            spriteBufferContext.clearRect(0, 0, width, height);
-            entity.draw(spriteBufferContext);
-            context.drawImage(
-                spriteBuffer,
-                entity.position.x - camera.position.x,
-                entity.position.y - camera.position.y
-            );
-        });
-}
 
 export function createCollisionLayer(level: Level): Layer {
     const tileResolver = level.tileCollider.tiles;

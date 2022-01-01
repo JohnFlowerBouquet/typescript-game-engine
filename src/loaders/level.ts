@@ -1,6 +1,6 @@
 import { TILE_SIZE } from "../globals";
-import { createSpriteLayer } from "../layers";
 import { createBackgroundLayer } from "../layers/background";
+import { createSpriteLayer } from "../layers/sprites";
 import Level from "../Level";
 import { loadJSON, loadSpriteSheet } from "../loaders";
 import SpriteSheet from "../SpriteSheet";
