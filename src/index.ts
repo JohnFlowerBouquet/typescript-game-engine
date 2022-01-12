@@ -12,6 +12,8 @@ import { createCollisionLayer } from "./layers/collision";
 import { createCameraLayer } from "./layers/camera";
 import { loadFont } from "./font";
 import { createDashboardLayer } from "./layers/dashboard";
+import { createAudioLoader } from "./loaders/audio";
+import AudioBoard from "./AudioBoard";
 
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
@@ -38,6 +40,13 @@ async function main(): Promise<void> {
     const loadLevel = createLevelLoader(entityFactory);
     const level = await loadLevel("1");
 
+    const audioContext = new AudioContext();
+    const audioBoard = new AudioBoard(audioContext);
+    const loadAudio = createAudioLoader(audioContext);
+    loadAudio("/audio/jump.ogg").then(buffer => {
+        audioBoard.addAudio("jump", buffer);
+    })
+
     const camera = new Camera();
     const mario = entityFactory["mario"]();
 
@@ -56,7 +65,7 @@ async function main(): Promise<void> {
 
     const timer = new Timer();
     timer.updateFunction = (deltaTime) => {
-        level.update(deltaTime);
+        level.update(deltaTime, audioBoard);
         level.compositor.draw(context, camera);
 
         camera.position.x = Math.max(0, mario.position.x - 100);

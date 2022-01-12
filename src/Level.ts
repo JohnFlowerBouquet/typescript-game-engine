@@ -1,3 +1,4 @@
+import AudioBoard from "./AudioBoard";
 import Compositor from "./Compositor";
 import Entity from "./Entity";
 import EntityCollider from "./EntityCollider";
@@ -22,9 +23,9 @@ export default class Level {
         this._entityCollider = new EntityCollider(this.entities);
     }
 
-    public update(deltaTime: number): void {
+    public update(deltaTime: number, audioBoard: AudioBoard): void {
         this.entities.forEach(entity => {
-            entity.update(deltaTime, this);
+            entity.update(deltaTime, this, audioBoard);
         })
 
         this.entities.forEach(entity => {

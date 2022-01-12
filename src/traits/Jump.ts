@@ -1,4 +1,6 @@
+import AudioBoard from "../AudioBoard";
 import Entity, { Side } from "../Entity";
+import Level from "../Level";
 import Trait from "./Trait";
 
 export default class Jump extends Trait {
@@ -35,9 +37,10 @@ export default class Jump extends Trait {
         }
     }
 
-    public update(entity: Entity, deltaTime: number): void {
+    public update(entity: Entity, deltaTime: number, level: Level, audioBoard: AudioBoard): void {
         if (this._requestTime > 0) {
             if (this._ready > 0) {
+                audioBoard.playAudio("jump");
                 this._engageTime = this._duration;
                 this._requestTime = 0;
             }

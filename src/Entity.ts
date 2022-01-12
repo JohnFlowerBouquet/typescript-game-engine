@@ -1,3 +1,4 @@
+import AudioBoard from "./AudioBoard";
 import HitBox from "./HitBox";
 import Level from "./Level";
 import { Tile } from "./Matrix";
@@ -80,9 +81,9 @@ export default class Entity {
         });
     }
 
-    public update(deltaTime: number, level: Level): void {
+    public update(deltaTime: number, level: Level, audioBoard: AudioBoard): void {
         this.traits.forEach((trait) => {
-            trait.update(this, deltaTime, level);
+            trait.update(this, deltaTime, level, audioBoard);
         });
         this.lifeTime += deltaTime;
     }
