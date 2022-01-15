@@ -1,6 +1,5 @@
 export default class AudioBoard {
     constructor(
-        private readonly _context: AudioContext,
         private readonly _buffers = new Map<string, AudioBuffer>()
     ) {}
 
@@ -8,12 +7,12 @@ export default class AudioBoard {
         this._buffers.set(name, buffer);
     }
 
-    public playAudio(name: string): void {
+    public playAudio(name: string, audioContext: AudioContext): void {
         const buffer = this._buffers.get(name);
         
         if (buffer) {
-            const source = this._context.createBufferSource();
-            source.connect(this._context.destination);
+            const source = audioContext.createBufferSource();
+            source.connect(audioContext.destination);
             source.buffer = buffer;
             source.start(0);
         }

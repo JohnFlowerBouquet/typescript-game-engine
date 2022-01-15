@@ -93,7 +93,7 @@ export default class Entity {
         this.traits.forEach(trait => trait.runTasks());
     }
 
-    public playAudio(name: string): void {
-        this.audioBoard?.playAudio(name);
+    public playAudio(name: string, audioContext: AudioContext): void {
+        this.audioBoard?.playAudio(name, audioContext);
     }
 }

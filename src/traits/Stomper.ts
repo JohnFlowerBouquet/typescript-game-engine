@@ -23,9 +23,9 @@ export default class Stomper extends Trait {
         }
     }
 
-    public update(entity: Entity): void {
+    public update(entity: Entity, gameContext: GameContext): void {
         if (this._stomped) {
-            entity.playAudio("stomp");
+            entity.playAudio("stomp", gameContext.audioContext);
             this._stomped = false;
         }
     }

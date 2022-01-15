@@ -12,7 +12,7 @@ interface AudioSheet {
 export function loadAudioBoard(name: string, audioContext: AudioContext): Promise<AudioBoard> {
     const loadAudio = createAudioLoader(audioContext);
     return loadJSON<AudioSheet>(`/audio/${name}.json`).then(audioSheet => {
-        const audioBoard = new AudioBoard(audioContext);
+        const audioBoard = new AudioBoard();
         const fx = audioSheet.fx;
         const jobs: Promise<void>[] = [];
         Object.keys(fx).forEach(name => {

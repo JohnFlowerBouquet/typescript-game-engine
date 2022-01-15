@@ -57,7 +57,8 @@ async function main(): Promise<void> {
     }
 
     const gameContext: GameContext = {
-        deltaTime: 0
+        deltaTime: 0,
+        audioContext
     };
 
     const timer = new Timer();
