@@ -47,6 +47,9 @@ async function main(): Promise<void> {
     loadAudio("/audio/jump.ogg").then(buffer => {
         audioBoard.addAudio("jump", buffer);
     })
+    loadAudio("/audio/stomp.ogg").then(buffer => {
+        audioBoard.addAudio("stomp", buffer);
+    })
 
     const camera = new Camera();
     const mario = entityFactory["mario"]();

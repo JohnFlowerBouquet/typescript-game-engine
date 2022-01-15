@@ -1,9 +1,11 @@
 import Entity from "../Entity";
+import { GameContext } from "../interface";
 import Killable from "./Killable";
 import Trait from "./Trait";
 
 export default class Stomper extends Trait {
     private _speed = 400;
+    private _stomped = false;
 
     constructor() {
         super('stomper');
@@ -17,6 +19,14 @@ export default class Stomper extends Trait {
 
         if (entity.velocity.y > collidingEntity.velocity.y) {
             this._bounce(entity, collidingEntity);
+            this._stomped = true;
+        }
+    }
+
+    public update(entity: Entity, gameContext: GameContext): void {
+        if (this._stomped) {
+            gameContext.audioBoard.playAudio("stomp");
+            this._stomped = false;
         }
     }
 
