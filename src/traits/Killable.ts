@@ -1,4 +1,5 @@
 import Entity from "../Entity";
+import { GameContext } from "../interface";
 import Level from "../Level";
 import Trait from "./Trait";
 
@@ -21,9 +22,9 @@ export default class Killable extends Trait {
         this.isDead = false;
     }
 
-    public update(entity: Entity, deltaTime: number, level: Level): void {
+    public update(entity: Entity, gameContext: GameContext, level: Level): void {
         if (this.isDead) {
-            this._deadTime += deltaTime;
+            this._deadTime += gameContext.deltaTime;
             if (this._deadTime > this._removeAfter) {
                 this.queue(() => level.entities.delete(entity));
             }

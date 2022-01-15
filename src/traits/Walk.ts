@@ -1,4 +1,5 @@
 import Entity, { Side } from "../Entity";
+import { GameContext } from "../interface";
 import Jump from "./Jump";
 import Trait from "./Trait";
 
@@ -30,10 +31,10 @@ export default class Walk extends Trait {
         return this._heading;
     }
 
-    public update(entity: Entity, deltaTime: number): void {
+    public update(entity: Entity, gameContext: GameContext): void {
         const absoluteX = Math.abs(entity.velocity.x);
         if (this._direction !== 0) {
-            entity.velocity.x += this._acceleration * this._direction * deltaTime * this._speed;
+            entity.velocity.x += this._acceleration * this._direction * gameContext.deltaTime * this._speed;
             const jumpTrait = entity.trait("jump") as Jump;
             if (jumpTrait) {
                 if (jumpTrait.falling === false) {
@@ -43,7 +44,7 @@ export default class Walk extends Trait {
                 this._heading = this._direction;
             }
         } else if (entity.velocity.x !== 0) {
-            const deceleration = Math.min(absoluteX, this._deceleration * deltaTime);
+            const deceleration = Math.min(absoluteX, this._deceleration * gameContext.deltaTime);
             entity.velocity.x += entity.velocity.x > 0 ? -deceleration : deceleration;
         } else {
             this._distance = 0;
@@ -52,7 +53,7 @@ export default class Walk extends Trait {
         const drag = this._dragFactor * entity.velocity.x * absoluteX;
         entity.velocity.x -= drag;
 
-        this._distance += absoluteX * deltaTime;
+        this._distance += absoluteX * gameContext.deltaTime;
     }
 
     public start(direction: number): void {

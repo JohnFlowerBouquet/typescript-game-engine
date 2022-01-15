@@ -2,6 +2,7 @@ import AudioBoard from "./AudioBoard";
 import Compositor from "./Compositor";
 import Entity from "./Entity";
 import EntityCollider from "./EntityCollider";
+import { GameContext } from "./interface";
 import Matrix from "./Matrix";
 import TileCollider from "./TileCollider";
 
@@ -23,9 +24,9 @@ export default class Level {
         this._entityCollider = new EntityCollider(this.entities);
     }
 
-    public update(deltaTime: number, audioBoard: AudioBoard): void {
+    public update(gameContext: GameContext): void {
         this.entities.forEach(entity => {
-            entity.update(deltaTime, this, audioBoard);
+            entity.update(gameContext, this);
         })
 
         this.entities.forEach(entity => {
@@ -34,6 +35,6 @@ export default class Level {
 
         this.entities.forEach(entity => entity.runQueuedTasks());
         
-        this.totalTime += deltaTime;
+        this.totalTime += gameContext.deltaTime;
     }
 }

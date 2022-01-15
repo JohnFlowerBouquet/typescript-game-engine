@@ -1,4 +1,5 @@
 import Entity from "../Entity";
+import { GameContext } from "../interface";
 import Level from "../Level";
 import { Vector } from "../vectors";
 import Killable from "./Killable";
@@ -25,14 +26,14 @@ export default class PlayerController extends Trait {
         this._checkpoint.set(x, y);
     }
 
-    public update(entity: Entity, deltaTime: number, level: Level): void {
+    public update(entity: Entity, gameContext: GameContext, level: Level): void {
         if (this._player && !level.entities.has(this._player)) {
             const killableTrait = this._player.trait("killable") as Killable;
             killableTrait.revive();
             this._player.position.set(this._checkpoint.x, this._checkpoint.y);
             level.entities.add(this._player);
         } else {
-            this._time -= deltaTime;
+            this._time -= gameContext.deltaTime;
         }
     }
 }

@@ -1,5 +1,6 @@
 import AudioBoard from "./AudioBoard";
 import HitBox from "./HitBox";
+import { GameContext } from "./interface";
 import Level from "./Level";
 import { Tile } from "./Matrix";
 import SpriteSheet from "./SpriteSheet";
@@ -81,11 +82,11 @@ export default class Entity {
         });
     }
 
-    public update(deltaTime: number, level: Level, audioBoard: AudioBoard): void {
+    public update(gameContext: GameContext, level: Level): void {
         this.traits.forEach((trait) => {
-            trait.update(this, deltaTime, level, audioBoard);
+            trait.update(this, gameContext, level);
         });
-        this.lifeTime += deltaTime;
+        this.lifeTime += gameContext.deltaTime;
     }
 
     public runQueuedTasks(): void {

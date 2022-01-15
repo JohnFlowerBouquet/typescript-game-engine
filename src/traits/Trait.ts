@@ -1,5 +1,5 @@
-import AudioBoard from "../AudioBoard";
 import Entity, { Side } from "../Entity";
+import { GameContext } from "../interface";
 import Level from "../Level";
 import { Tile } from "../Matrix";
 
@@ -12,7 +12,7 @@ export default class Trait {
 
     private _tasksQueue: Task[] = [];
 
-    public update(entity: Entity, deltaTime: number, level: Level, audioBoard: AudioBoard): void {}
+    public update(entity: Entity, gameContext: GameContext, level: Level): void {}
 
     public start(params?: any): void {}
 

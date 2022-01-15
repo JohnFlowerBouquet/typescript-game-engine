@@ -12,7 +12,7 @@ export default class PendulumWalk extends Trait {
         this._speed = speed;
     }
 
-    public update(entity: Entity, deltaTime: number): void {
+    public update(entity: Entity): void {
         if (this.enabled) {
             entity.velocity.x = this._speed;
         }

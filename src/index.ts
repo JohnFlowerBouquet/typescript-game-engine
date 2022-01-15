@@ -14,6 +14,7 @@ import { loadFont } from "./font";
 import { createDashboardLayer } from "./layers/dashboard";
 import { createAudioLoader } from "./loaders/audio";
 import AudioBoard from "./AudioBoard";
+import { GameContext } from "./interface";
 
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
@@ -63,9 +64,17 @@ async function main(): Promise<void> {
         level.compositor.addLayer(createCameraLayer(camera));
     }
 
+    const gameContext: GameContext = {
+        audioBoard,
+        deltaTime: 0
+    };
+
     const timer = new Timer();
     timer.updateFunction = (deltaTime) => {
-        level.update(deltaTime, audioBoard);
+
+        gameContext.deltaTime = deltaTime;
+        level.update(gameContext);
+
         level.compositor.draw(context, camera);
 
         camera.position.x = Math.max(0, mario.position.x - 100);

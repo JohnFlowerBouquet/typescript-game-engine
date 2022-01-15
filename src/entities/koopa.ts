@@ -1,5 +1,5 @@
 import Entity from "../Entity";
-import Level from "../Level";
+import { GameContext } from "../interface";
 import { loadSpriteSheet } from "../loaders";
 import SpriteSheet from "../SpriteSheet";
 import Killable from "../traits/Killable";
@@ -81,9 +81,9 @@ class Behavior extends Trait {
         return this._state === KoopaState.hiding;
     }
 
-    public update(entity: Entity, deltaTime: number, level: Level): void {
+    public update(entity: Entity, gameContext: GameContext): void {
         if (this._state === KoopaState.hiding) {
-            this.hidingTime += deltaTime;
+            this.hidingTime += gameContext.deltaTime;
             if (this.hidingTime > this._hidingDuration) {
                 this.reveal(entity);
             }
