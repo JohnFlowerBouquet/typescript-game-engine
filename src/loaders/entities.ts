@@ -8,14 +8,14 @@ type LoadEntity = () => Entity;
     [key: string]: LoadEntity
 }
 
-export function loadEntities(): Promise<EntityFactory> {
+export function loadEntities(audioContext: AudioContext): Promise<EntityFactory> {
     const entityFactories: EntityFactory = {};
 
     function addAs(name: string): (factory: LoadEntity) => void {
         return (factory: LoadEntity) => entityFactories[name] = factory;
     }
     return Promise.all([
-        loadMario().then(addAs("mario")),
+        loadMario(audioContext).then(addAs("mario")),
         loadGoomba().then(addAs("goomba")),
         loadKoopa().then(addAs("koopa"))
     ])

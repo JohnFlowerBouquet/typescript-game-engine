@@ -12,6 +12,5 @@ export interface Animation {
 }
 
 export interface GameContext {
-    audioBoard: AudioBoard;
     deltaTime: number;
 }

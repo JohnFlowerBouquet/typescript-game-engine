@@ -22,7 +22,6 @@ export default class Entity {
     public lifeTime = 0;
     public hitBox: HitBox;
 
-    private spriteSheet: SpriteSheet;
     private traits: Map<string, Trait>;
     private getFrame: (entity: Entity) => {
         frameName: string;
@@ -30,8 +29,9 @@ export default class Entity {
     };
     
     constructor(
-        spriteSheet: SpriteSheet,
-        getFrame: (entity: Entity) => { frameName: string; isFlipped: boolean }
+        private spriteSheet: SpriteSheet,
+        getFrame: (entity: Entity) => { frameName: string; isFlipped: boolean },
+        private audioBoard?: AudioBoard
     ) {
         this.position = new Vector(0, 0);
         this.velocity = new Vector(0, 0);
@@ -91,5 +91,9 @@ export default class Entity {
 
     public runQueuedTasks(): void {
         this.traits.forEach(trait => trait.runTasks());
+    }
+
+    public playAudio(name: string): void {
+        this.audioBoard?.playAudio(name);
     }
 }

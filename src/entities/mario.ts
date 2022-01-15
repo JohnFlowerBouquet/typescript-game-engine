@@ -1,5 +1,7 @@
+import AudioBoard from "../AudioBoard";
 import Entity from "../Entity";
 import { loadSpriteSheet } from "../loaders";
+import { loadAudioBoard } from "../loaders/audio";
 import SpriteSheet from "../SpriteSheet";
 import Jump from "../traits/Jump";
 import Killable from "../traits/Killable";
@@ -39,13 +41,17 @@ function drawFunction(entity: Entity): {frameName: string, isFlipped: boolean} {
     }
 }
 
-export function loadMario(): Promise<() => Entity> {
-    return loadSpriteSheet("mario").then(sprite => createMarioFactory(sprite))
+export function loadMario(audioContext: AudioContext): Promise<() => Entity> {
+    return Promise.all([
+        loadAudioBoard("mario", audioContext),
+        loadSpriteSheet("mario")
+    ]).then(([audioBoard, sprite]) => createMarioFactory(sprite, audioBoard))
 }
 
-function createMarioFactory(sprite: SpriteSheet): () => Entity {
+function createMarioFactory(sprite: SpriteSheet, audioBoard: AudioBoard): () => Entity {
+    
     return function createMario() {
-        const mario = new Entity(sprite, drawFunction);
+        const mario = new Entity(sprite, drawFunction, audioBoard);
         mario.size.set(16, 16);
         mario.addTrait(new Physics());
         mario.addTrait(new Solid());
