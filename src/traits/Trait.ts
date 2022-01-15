@@ -1,5 +1,6 @@
 import AudioBoard from "../AudioBoard";
 import Entity, { Side } from "../Entity";
+import EventEmitter from "../EventEmitter";
 import { GameContext } from "../interface";
 import Level from "../Level";
 import { Tile } from "../Matrix";
@@ -7,12 +8,18 @@ import { Tile } from "../Matrix";
 type Task = () => void;
 export default class Trait {
     public name: string;
+
+    public get events() {
+        return this._events;
+    }
+
     constructor(name: string) {
         this.name = name;
     }
 
     private _tasksQueue: Task[] = [];
     private _sounds = new Set<string>();
+    private _events = new EventEmitter();
 
     public update(entity: Entity, gameContext: GameContext, level: Level): void {}
 

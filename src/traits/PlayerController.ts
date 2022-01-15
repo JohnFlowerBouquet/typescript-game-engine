@@ -3,12 +3,18 @@ import { GameContext } from "../interface";
 import Level from "../Level";
 import { Vector } from "../vectors";
 import Killable from "./Killable";
+import Stomper from "./Stomper";
 import Trait from "./Trait";
 
 export default class PlayerController extends Trait {
     private _player?: Entity;
     private _checkpoint = new Vector(0, 0);
     private _time = 300;
+    private _score = 0;
+
+    public get score(): number {
+        return this._score;
+    }
 
     public get time(): number {
         return this._time;
@@ -20,6 +26,11 @@ export default class PlayerController extends Trait {
 
     public setPlayer(entity: Entity): void {
         this._player = entity;
+        const stomperTrait = this._player.trait("stomper") as Stomper;
+        stomperTrait.events.listen("stomp", () => {
+            this._score += 100;
+        })
+        
     }
 
     public setCheckpoint(x: number, y: number): void {
