@@ -1,3 +1,4 @@
+import AudioBoard from "../AudioBoard";
 import Entity, { Side } from "../Entity";
 import { GameContext } from "../interface";
 import Level from "../Level";
@@ -11,6 +12,7 @@ export default class Trait {
     }
 
     private _tasksQueue: Task[] = [];
+    private _sounds = new Set<string>();
 
     public update(entity: Entity, gameContext: GameContext, level: Level): void {}
 
@@ -29,5 +31,14 @@ export default class Trait {
     public runTasks(): void {
         this._tasksQueue.forEach((task) => task());
         this._tasksQueue.length = 0;
+    }
+
+    public playSounds(audioBoard: AudioBoard, audioContext: AudioContext): void {
+        this._sounds.forEach(sound => audioBoard.playAudio(sound, audioContext));
+        this._sounds.clear();
+    }
+
+    public playSound(name: string): void {
+        this._sounds.add(name);
     }
 }

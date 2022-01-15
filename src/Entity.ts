@@ -85,6 +85,9 @@ export default class Entity {
     public update(gameContext: GameContext, level: Level): void {
         this.traits.forEach((trait) => {
             trait.update(this, gameContext, level);
+            if (this.audioBoard) {
+                trait.playSounds(this.audioBoard, gameContext.audioContext);
+            }
         });
         this.lifeTime += gameContext.deltaTime;
     }
