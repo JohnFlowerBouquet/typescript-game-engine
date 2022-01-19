@@ -1,0 +1,11 @@
+{
+    "url": "/assets/characters.gif",
+    "width": 16,
+    "height": 14,
+    "frames": [
+        {
+            "name": "bullet",
+            "rect": [267, 334, 16, 14]
+        }
+    ]
+}
