@@ -28,8 +28,8 @@
             "position": [128, 64]
         },
         {
-            "name": "bullet",
-            "position": [176, 128]
+            "name": "cannon",
+            "position": [224, 128]
         }
     ]
 }

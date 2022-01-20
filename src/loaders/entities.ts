@@ -1,4 +1,5 @@
 import { loadBullet } from "../entities/bullet";
+import { loadCannon } from "../entities/cannon";
 import { loadGoomba } from "../entities/goomba";
 import { loadKoopa } from "../entities/koopa";
 import { loadMario } from "../entities/mario";
@@ -19,7 +20,8 @@ export function loadEntities(audioContext: AudioContext): Promise<EntityFactory>
         loadMario(audioContext).then(addAs("mario")),
         loadGoomba().then(addAs("goomba")),
         loadKoopa().then(addAs("koopa")),
-        loadBullet().then(addAs("bullet"))
+        loadBullet().then(addAs("bullet")),
+        loadCannon(audioContext, entityFactories).then(addAs("cannon"))
     ])
     .then(() => entityFactories);
 }
