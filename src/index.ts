@@ -5,27 +5,15 @@ import Timer from "./Timer";
 import { setupMouseControl } from "./utils/debug";
 import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 import { loadEntities } from "./loaders/entities";
-import Entity from "./Entity";
-import SpriteSheet from "./SpriteSheet";
-import PlayerController from "./traits/PlayerController";
 import { createCollisionLayer } from "./layers/collision";
 import { createCameraLayer } from "./layers/camera";
 import { loadFont } from "./font";
 import { createDashboardLayer } from "./layers/dashboard";
 import { GameContext } from "./interface";
+import { createPlayer, createPlayerEnv } from "./player";
 
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
-
-function createPlayerEnv(playerEntity: Entity): Entity {
-    const imageStub = new Image();
-    const playerEnv = new Entity(new SpriteSheet(imageStub, 0, 0), () => ({frameName: "", isFlipped: false}));
-    const playerController = new PlayerController();
-    playerController.setPlayer(playerEntity);
-    playerController.setCheckpoint(64, 64);
-    playerEnv.addTrait(playerController);
-    return playerEnv;
-}
 
 async function main(): Promise<void> {
     const { canvas, context } = getCanvasWithContext(
@@ -41,7 +29,7 @@ async function main(): Promise<void> {
     const level = await loadLevel("1");
 
     const camera = new Camera();
-    const mario = entityFactory["mario"]();
+    const mario = createPlayer(entityFactory["mario"]());
 
     const playerEnv = createPlayerEnv(mario);
     level.entities.add(playerEnv);
