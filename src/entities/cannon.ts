@@ -12,6 +12,7 @@ export function loadCannon(audioContext: AudioContext, entityFactory: EntityFact
 
 function createCannonFactory(audioBoard: AudioBoard, entityFactory: EntityFactory): () => Entity {
     function emitBullet(entity: Entity, level: Level): void {
+        entity.playSound("thwomp");
         const bullet = entityFactory["bullet"]();
         level.entities.add(bullet);
         bullet.position.copy(entity.position);
