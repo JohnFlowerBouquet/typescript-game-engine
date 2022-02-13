@@ -16,7 +16,7 @@ export default class Stomper extends Trait {
         }
 
         if (entity.velocity.y > collidingEntity.velocity.y) {
-            this._bounce(entity, collidingEntity);
+            this.queue(() => this._bounce(entity, collidingEntity));
             this.events.emit("stomp", entity, collidingEntity);
             this.playSound("stomp");
         }

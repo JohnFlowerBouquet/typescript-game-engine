@@ -7,7 +7,7 @@ import SpriteSheet from "../SpriteSheet";
 import Emitter from "../traits/Emitter";
 
 export function loadCannon(audioContext: AudioContext, entityFactory: EntityFactory): Promise<() => Entity> {
-    return loadAudioBoard("mario", audioContext).then(audioBoard => createCannonFactory(audioBoard, entityFactory))
+    return loadAudioBoard("cannon", audioContext).then(audioBoard => createCannonFactory(audioBoard, entityFactory))
 }
 
 function createCannonFactory(audioBoard: AudioBoard, entityFactory: EntityFactory): () => Entity {
