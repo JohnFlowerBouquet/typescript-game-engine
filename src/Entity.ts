@@ -22,33 +22,28 @@ export default class Entity {
     public lifeTime = 0;
     public hitBox: HitBox;
 
-    private traits: Map<string, Trait>;
-    private getFrame: (entity: Entity) => {
-        frameName: string;
-        isFlipped: boolean;
-    };
+    private _sounds = new Set<string>();
+    private _traits: Map<string, Trait>;
     
     constructor(
-        private spriteSheet: SpriteSheet,
-        getFrame: (entity: Entity) => { frameName: string; isFlipped: boolean },
-        private audioBoard?: AudioBoard
+        private _spriteSheet: SpriteSheet,
+        private _getFrame: (entity: Entity) => { frameName: string; isFlipped: boolean },
+        private _audioBoard?: AudioBoard
     ) {
         this.position = new Vector(0, 0);
         this.velocity = new Vector(0, 0);
         this.size = new Vector(0, 0);
         this.offset = new Vector(0, 0);
-        this.spriteSheet = spriteSheet;
-        this.traits = new Map();
-        this.getFrame = getFrame;
         this.hitBox = new HitBox(this.position, this.size, this.offset);
+        this._traits = new Map();
     }
 
     public get animations() {
-        return this.spriteSheet.animations;
+        return this._spriteSheet.animations;
     }
 
     public trait(traitName: string): Trait {
-        const trait = this.traits.get(traitName);
+        const trait = this._traits.get(traitName);
         if (trait) {
             return trait;
         } else {
@@ -57,46 +52,53 @@ export default class Entity {
     }
 
     public hasTrait(traitName: string): boolean {
-        const trait = this.traits.get(traitName);
+        const trait = this._traits.get(traitName);
         return !!trait;
     }
 
     public draw(context: CanvasRenderingContext2D): void {
-        const { frameName, isFlipped } = this.getFrame(this);
-        this.spriteSheet.draw(frameName, context, 0, 0, isFlipped);
+        const { frameName, isFlipped } = this._getFrame(this);
+        this._spriteSheet.draw(frameName, context, 0, 0, isFlipped);
     }
 
     public addTrait(trait: Trait): void {
-        this.traits.set(trait.name, trait);
+        this._traits.set(trait.name, trait);
     }
 
     public obstruct(side: Side, match: Tile): void {
-        this.traits.forEach((trait) => {
+        this._traits.forEach((trait) => {
             trait.obstruct(this, side, match);
         });
     }
 
     public collides(collidingCandidate: Entity): void {
-        this.traits.forEach((trait) => {
+        this._traits.forEach((trait) => {
             trait.collides(this, collidingCandidate);
         });
     }
 
     public update(gameContext: GameContext, level: Level): void {
-        this.traits.forEach((trait) => {
+        this._traits.forEach((trait) => {
             trait.update(this, gameContext, level);
-            if (this.audioBoard) {
-                trait.playSounds(this.audioBoard, gameContext.audioContext);
-            }
         });
+
+        if (this._audioBoard) {
+            this._playSounds(this._audioBoard, gameContext.audioContext);
+        }
+        
         this.lifeTime += gameContext.deltaTime;
     }
 
     public runQueuedTasks(): void {
-        this.traits.forEach(trait => trait.runTasks());
+        this._traits.forEach(trait => trait.runTasks());
     }
 
-    public playAudio(name: string, audioContext: AudioContext): void {
-        this.audioBoard?.playAudio(name, audioContext);
+    public playSound(name: string): void {
+        this._sounds.add(name);
+    }
+
+    private _playSounds(audioBoard: AudioBoard, audioContext: AudioContext): void {
+        this._sounds.forEach(sound => audioBoard.playAudio(sound, audioContext));
+        this._sounds.clear();
     }
 }

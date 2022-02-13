@@ -40,7 +40,7 @@ export default class Jump extends Trait {
     public update(entity: Entity, gameContext: GameContext, level: Level): void {
         if (this._requestTime > 0) {
             if (this._ready > 0) {
-                this.playSound("jump");
+                entity.playSound("jump");
                 this._engageTime = this._duration;
                 this._requestTime = 0;
             }
