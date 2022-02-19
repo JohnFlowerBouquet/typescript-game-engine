@@ -8,11 +8,11 @@ import Solid from "./traits/Solid";
  function getMockMatrixWithEntity(): {matrix: Matrix, entity: Entity} {
     const matrix = new Matrix();
     const mockMap = [
-        ["block","block" ,"block" ,"block" ,"block"],
-        ["block", "sky","sky","sky", "block"],
-        ["block", "sky","sky","sky", "block"],
-        ["block", "sky","sky","sky", "block"],
-        ["block", "block", "block", "block", "block"],
+        ["ground","ground" ,"ground" ,"ground" ,"ground"],
+        ["ground", "sky","sky","sky", "ground"],
+        ["ground", "sky","sky","sky", "ground"],
+        ["ground", "sky","sky","sky", "ground"],
+        ["ground", "ground", "ground", "ground", "ground"],
     ]
     mockMap.forEach((column, y) => {
         column.forEach((name, x) => {
