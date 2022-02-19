@@ -32,6 +32,12 @@ export default class Matrix {
         this.grid[x][y] = value;
     }
 
+    public remove(x: number, y: number): void {
+        // TODO: Enable adding more tile layers so that the tiles like bricks can be removed
+        const tileToRemove = this.grid[x][y];
+        this.grid[x][y] = {...tileToRemove, name: "sky"}
+    }
+
     clear() {
         this.grid.length = 0;
     }

@@ -1,6 +1,10 @@
 import { TILE_SIZE } from "./globals";
 import Matrix, { Tile } from "./Matrix";
 
+export interface TileWithIndex extends Tile {
+    indexX: number;
+    indexY: number;
+}
 export default class TileResolver {
     public matrix: Matrix;
     public tileSize: number;
@@ -39,13 +43,13 @@ export default class TileResolver {
         };
     }
 
-    public searchByRange(x1: number, x2: number, y1: number, y2: number): Tile[] {
-        const matches: Tile[] = [];
+    public searchByRange(x1: number, x2: number, y1: number, y2: number): TileWithIndex[] {
+        const matches: TileWithIndex[] = [];
         this.toIndexRange(x1, x2).forEach(indexX => {
             this.toIndexRange(y1, y2).forEach(indexY => {
                 const match = this.getByIndex(indexX, indexY);
                 if (match) {
-                    matches.push(match);
+                    matches.push({...match, indexX, indexY});
                 }
             })
         })

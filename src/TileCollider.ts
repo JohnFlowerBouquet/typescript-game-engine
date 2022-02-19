@@ -1,14 +1,15 @@
-import Entity, { Side } from "./Entity";
-import Matrix, { Tile } from "./Matrix";
+import Entity from "./Entity";
+import Matrix from "./Matrix";
 import TileResolver from "./TileResolver";
+import { bricks } from "./tiles/brick";
 import { ground } from "./tiles/ground";
+import { TileCollisionHandler } from "./tiles/tileCollisionHandler.interface";
 
 const colliders = new Set<string>(["ground", "bricks", "block", "question", "pipe-insert-vert-left", "pipe-insert-vert-right", "pipe-vert-left", "pipe-vert-right"]);
 
-type Handler = (entity: Entity, match: Tile) => void;
-
-const handlers: {[key: string]: Handler[]} = {
-    ground
+const handlers: {[key: string]: TileCollisionHandler[]} = {
+    ground,
+    bricks
 }
 
 export default class TileCollider {
@@ -37,7 +38,7 @@ export default class TileCollider {
         matches.forEach(match => {
             const handler = handlers[match.name];
             if (handler) {
-                handler[0](entity, match);
+                handler[0](entity, match, this.tiles);
             }
         })
     }
@@ -61,7 +62,7 @@ export default class TileCollider {
         matches.forEach(match => {
             const handler = handlers[match.name]
             if (handler) {
-                handler[1](entity, match);
+                handler[1](entity, match, this.tiles);
             }
         })
     }
