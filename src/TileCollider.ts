@@ -1,8 +1,16 @@
 import Entity, { Side } from "./Entity";
-import Matrix from "./Matrix";
+import Matrix, { Tile } from "./Matrix";
 import TileResolver from "./TileResolver";
+import { ground } from "./tiles/ground";
 
 const colliders = new Set<string>(["ground", "bricks", "block", "question", "pipe-insert-vert-left", "pipe-insert-vert-right", "pipe-vert-left", "pipe-vert-right"]);
+
+type Handler = (entity: Entity, match: Tile) => void;
+
+const handlers: {[key: string]: Handler[]} = {
+    ground
+}
+
 export default class TileCollider {
     public tiles: TileResolver;
 
@@ -27,18 +35,9 @@ export default class TileCollider {
         );
         
         matches.forEach(match => {
-            if (!colliders.has(match.name)) {
-                return;
-            }
-    
-            if (entity.velocity.x > 0) {
-                if (entity.hitBox.right > match.x1) {
-                    entity.obstruct(Side.right, match);
-                }
-            } else if (entity.velocity.x < 0) {
-                if (entity.hitBox.left < match.x2) {
-                    entity.obstruct(Side.left, match);
-                }
+            const handler = handlers[match.name];
+            if (handler) {
+                handler[0](entity, match);
             }
         })
     }
@@ -60,18 +59,9 @@ export default class TileCollider {
         );
         
         matches.forEach(match => {
-            if (!colliders.has(match.name)) {
-                return;
-            }
-    
-            if (entity.velocity.y > 0) {
-                if (entity.hitBox.bottom > match.y1) {
-                    entity.obstruct(Side.bottom, match);
-                }
-            } else if (entity.velocity.y < 0) {
-                if (entity.hitBox.top  < match.y2) {
-                    entity.obstruct(Side.top, match);
-                }
+            const handler = handlers[match.name]
+            if (handler) {
+                handler[1](entity, match);
             }
         })
     }
