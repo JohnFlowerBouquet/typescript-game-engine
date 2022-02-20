@@ -1,11 +1,13 @@
 import Entity from "./Entity";
 import { TILE_SIZE } from "./globals";
+import { GameContext } from "./interface";
+import Level from "./Level";
 import Matrix from "./Matrix";
 import SpriteSheet from "./SpriteSheet";
 import TileCollider from "./TileCollider";
 import Solid from "./traits/Solid";
 
- function getMockMatrixWithEntity(): {matrix: Matrix, entity: Entity} {
+ function getMockMatrixWithEntity(): {matrix: Matrix, entity: Entity, gameContext: GameContext, level: Level} {
     const matrix = new Matrix();
     const mockMap = [
         ["ground","ground" ,"ground" ,"ground" ,"ground"],
@@ -34,9 +36,14 @@ import Solid from "./traits/Solid";
     entity.position.x = 32;
     entity.position.y = 64;
 
+    const gameContext = {} as GameContext;
+    const level = {} as Level;
+
     return {
         matrix,
-        entity
+        entity,
+        gameContext,
+        level
     };
  }
 
@@ -49,32 +56,32 @@ describe("TileCollider", () => {
     })
 
     it("checkX does NOT check collisions if entity velocity x is 0", async () => {
-        const {matrix, entity} = getMockMatrixWithEntity();
+        const {matrix, entity, gameContext, level} = getMockMatrixWithEntity();
         const tileCollider = new TileCollider(matrix);
         const spy = spyOn(matrix, "get");
 
-        tileCollider.checkX(entity);
+        tileCollider.checkX(entity, gameContext, level);
 
         expect(spy).toHaveBeenCalledTimes(0);
     })
 
     it("checkX does check for collisions if entity velocity is not 0", async () => {
-        const {matrix, entity} = getMockMatrixWithEntity();
+        const {matrix, entity, gameContext, level} = getMockMatrixWithEntity();
         const tileCollider = new TileCollider(matrix);
         entity.velocity.x = 1;
         const spy = spyOn(matrix, "get").and.callThrough();
-        tileCollider.checkX(entity);
+        tileCollider.checkX(entity, gameContext, level);
 
         expect(entity.velocity.x).toBe(1);
         expect(spy).toHaveBeenCalledTimes(1);
     })
 
     it("checkX does update entity velocity to 0 if detects collision", async () => {
-        const {matrix, entity} = getMockMatrixWithEntity();
+        const {matrix, entity, gameContext, level} = getMockMatrixWithEntity();
         const tileCollider = new TileCollider(matrix);
         entity.velocity.x = 1;
         entity.position.x = 2;
-        tileCollider.checkX(entity)
+        tileCollider.checkX(entity, gameContext, level)
 
         expect(entity.velocity.x).toBe(0);
     })
