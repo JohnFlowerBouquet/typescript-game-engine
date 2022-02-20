@@ -1,4 +1,6 @@
 import Entity from "./Entity";
+import { GameContext } from "./interface";
+import Level from "./Level";
 import Matrix from "./Matrix";
 import TileResolver from "./TileResolver";
 import { bricks } from "./tiles/brick";
@@ -19,7 +21,7 @@ export default class TileCollider {
         this.tiles = new TileResolver(matrix);
     }
 
-    public checkX(entity: Entity): void {
+    public checkX(entity: Entity, gameContext: GameContext, level: Level): void {
         let x: number;
         if (entity.velocity.x > 0) {
             x = entity.hitBox.right;
@@ -38,12 +40,12 @@ export default class TileCollider {
         matches.forEach(match => {
             const handler = handlers[match.name];
             if (handler) {
-                handler[0](entity, match, this.tiles);
+                handler[0](entity, match, this.tiles, gameContext, level);
             }
         })
     }
 
-    public checkY(entity: Entity): void {
+    public checkY(entity: Entity, gameContext: GameContext, level: Level): void {
         let y: number;
         if (entity.velocity.y > 0) {
             y = entity.hitBox.bottom;
@@ -62,7 +64,7 @@ export default class TileCollider {
         matches.forEach(match => {
             const handler = handlers[match.name]
             if (handler) {
-                handler[1](entity, match, this.tiles);
+                handler[1](entity, match, this.tiles, gameContext, level);
             }
         })
     }

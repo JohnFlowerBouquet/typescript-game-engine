@@ -1,3 +1,5 @@
+import { EntityFactory } from "./loaders/entities";
+
 export interface Position {
     x: number,
     y: number
@@ -11,5 +13,6 @@ export interface Animation {
 
 export interface GameContext {
     deltaTime: number;
-    audioContext: AudioContext
+    audioContext: AudioContext;
+    entityFactory: EntityFactory;
 }
