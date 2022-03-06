@@ -1,5 +1,5 @@
 import Entity from "../Entity";
-import { loadSpriteSheet } from "../loaders";
+import { loadSpriteSheet } from "../loaders/sprite";
 import SpriteSheet from "../SpriteSheet";
 import Killable from "../traits/Killable";
 import PendulumWalk from "../traits/PendulumWalk";
