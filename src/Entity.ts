@@ -1,4 +1,5 @@
 import AudioBoard from "./AudioBoard";
+import EventBuffer from "./EventBuffer";
 import HitBox from "./HitBox";
 import { GameContext } from "./interface";
 import Level from "./Level";
@@ -24,6 +25,7 @@ export default class Entity {
 
     private _sounds = new Set<string>();
     private _traits: Map<string, Trait>;
+    private _events = new EventBuffer();
     
     constructor(
         private _spriteSheet: SpriteSheet,
@@ -40,6 +42,10 @@ export default class Entity {
 
     public get animations() {
         return this._spriteSheet.animations;
+    }
+
+    public get events() {
+        return this._events;
     }
 
     public trait(traitName: string): Trait {
@@ -90,7 +96,9 @@ export default class Entity {
     }
 
     public runQueuedTasks(): void {
-        this._traits.forEach(trait => trait.runTasks());
+        this.events.emit(Trait.EVENT_TASK);
+        this._traits.forEach(trait => trait.runTasks(this));
+        this.events.clear();
     }
 
     public playSound(name: string): void {
