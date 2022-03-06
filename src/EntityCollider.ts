@@ -11,7 +11,6 @@ export default class EntityCollider {
 
             if (entity.hitBox.overlaps(collidingCandidate.hitBox)) {
                 entity.collides(collidingCandidate);
-                collidingCandidate.collides(entity);
             }
         })
     }
