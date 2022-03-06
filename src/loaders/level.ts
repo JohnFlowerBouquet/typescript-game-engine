@@ -6,11 +6,13 @@ import { loadJSON } from "../loaders";
 import { loadSpriteSheet } from "../loaders/sprite";
 import SpriteSheet from "../SpriteSheet";
 import { EntityFactory } from "./entities";
+import { loadMusicSheet } from "./music";
 
 export type LevelMapRow = string[];
 
 interface LevelMap {
     spriteSheet: string;
+    musicSheet: string;
     map: LevelMapRow[];
     entities: {
         name: string;
@@ -23,11 +25,13 @@ export function createLevelLoader(
 ): (name: string) => Promise<Level> {
     return function loadLevel(name: string): Promise<Level> {
         return loadJSON<LevelMap>(`/levels/${name}.json`)
-            .then((levelSpec) =>
-                Promise.all([levelSpec, loadSpriteSheet(levelSpec.spriteSheet)])
-            )
-            .then(([levelSpec, backgroundSprites]) => {
-                const level = new Level();
+            .then((levelSpec) => Promise.all([
+                    levelSpec,
+                    loadSpriteSheet(levelSpec.spriteSheet),
+                    loadMusicSheet(levelSpec.musicSheet)
+            ]))
+            .then(([levelSpec, backgroundSprites, musicPlayer]) => {
+                const level = new Level(musicPlayer);
 
                 createTiles(level, levelSpec.map);
 

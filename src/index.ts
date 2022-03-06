@@ -62,6 +62,7 @@ async function main(): Promise<void> {
     };
 
     timer.start();
+    level.musicController.playTrack("main");
 
     document.body.appendChild(canvas);
 }

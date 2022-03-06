@@ -3,6 +3,8 @@ import Entity from "./Entity";
 import EntityCollider from "./EntityCollider";
 import { GameContext } from "./interface";
 import Matrix from "./Matrix";
+import MusicController from "./MusicController";
+import MusicPlayer from "./MusicPlayer";
 import TileCollider from "./TileCollider";
 
 export default class Level {
@@ -12,10 +14,12 @@ export default class Level {
     public tileCollider: TileCollider;
     public gravity = 1500;
     public totalTime = 0;
+    public readonly musicController: MusicController;
 
     private _entityCollider: EntityCollider;
 
-    constructor() {
+    constructor(musicPlayer: MusicPlayer) {
+        this.musicController = new MusicController(musicPlayer);
         this.compositor = new Compositor();
         this.entities = new Set();
         this.tiles = new Matrix();
