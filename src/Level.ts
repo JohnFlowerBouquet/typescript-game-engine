@@ -1,6 +1,7 @@
 import Compositor from "./Compositor";
 import Entity from "./Entity";
 import EntityCollider from "./EntityCollider";
+import EventEmitter from "./EventEmitter";
 import { GameContext } from "./interface";
 import Matrix from "./Matrix";
 import MusicController from "./MusicController";
@@ -15,6 +16,7 @@ export default class Level {
     public gravity = 1500;
     public totalTime = 0;
     public readonly musicController: MusicController;
+    public readonly events = new EventEmitter();
 
     private _entityCollider: EntityCollider;
 

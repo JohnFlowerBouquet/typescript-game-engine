@@ -8,7 +8,7 @@ export default class MusicController {
         this.musicPlayer = musicPlayer;
     }
 
-    public playTrack(name: string): void {
-        this.musicPlayer.playTrack(name);
+    public playTrack(name: string, playBackRate: number = 1): HTMLAudioElement | undefined {
+        return this.musicPlayer.playTrack(name, playBackRate);
     }
 }

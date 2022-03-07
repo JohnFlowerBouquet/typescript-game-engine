@@ -9,11 +9,14 @@ export default class MusicPlayer {
         this.tracks.set(name, audio);
     }
 
-    public playTrack(name: string): void {
+    public playTrack(name: string, playBackRate: number): HTMLAudioElement | undefined {
+        this.tracks.forEach(track => track.pause());
         const track = this.tracks.get(name);
         if (track) {
+            track.playbackRate = playBackRate;
             track.play();
             track.muted = false;
+            return track;
         }
     }
 }

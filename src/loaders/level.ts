@@ -1,3 +1,4 @@
+import Entity from "../Entity";
 import { TILE_SIZE } from "../globals";
 import { createBackgroundLayer } from "../layers/background";
 import { createSpriteLayer } from "../layers/sprites";
@@ -5,6 +6,7 @@ import Level from "../Level";
 import { loadJSON } from "../loaders";
 import { loadSpriteSheet } from "../loaders/sprite";
 import SpriteSheet from "../SpriteSheet";
+import LevelTimer from "../traits/LevelTimer";
 import { EntityFactory } from "./entities";
 import { loadMusicSheet } from "./music";
 
@@ -16,8 +18,34 @@ interface LevelMap {
     map: LevelMapRow[];
     entities: {
         name: string;
-        position: [number, number]
-    }[]
+        position: [number, number];
+    }[];
+}
+
+function createTimer() {
+    const timer = new Entity(new SpriteSheet(new Image(), 0, 0), () => ({
+        frameName: "",
+        isFlipped: false,
+    }));
+    timer.addTrait(new LevelTimer());
+    return timer;
+}
+
+function setupBehavior(level: Level): void {
+    const timer = createTimer();
+    level.entities.add(timer);
+    level.events.listen(LevelTimer.EVENT_TIMER_OK, () => {
+        level.musicController.playTrack("main");
+    });
+    level.events.listen(LevelTimer.EVENT_TIMER_HURRY, () => {
+        const track = level.musicController.playTrack("hurry");
+        if (track) {
+            track.loop = false;
+            track.addEventListener("ended", () => {
+                level.musicController.playTrack("main", 1.3);
+            });
+        }
+    });
 }
 
 export function createLevelLoader(
@@ -25,11 +53,13 @@ export function createLevelLoader(
 ): (name: string) => Promise<Level> {
     return function loadLevel(name: string): Promise<Level> {
         return loadJSON<LevelMap>(`/levels/${name}.json`)
-            .then((levelSpec) => Promise.all([
+            .then((levelSpec) =>
+                Promise.all([
                     levelSpec,
                     loadSpriteSheet(levelSpec.spriteSheet),
-                    loadMusicSheet(levelSpec.musicSheet)
-            ]))
+                    loadMusicSheet(levelSpec.musicSheet),
+                ])
+            )
             .then(([levelSpec, backgroundSprites, musicPlayer]) => {
                 const level = new Level(musicPlayer);
 
@@ -38,6 +68,8 @@ export function createLevelLoader(
                 setupBackgrounds(level, backgroundSprites);
 
                 setupEntities(level, levelSpec, entityFactory);
+
+                setupBehavior(level);
 
                 return level;
             });
@@ -63,13 +95,17 @@ function setupBackgrounds(level: Level, backgroundSprites: SpriteSheet): void {
     level.compositor.addLayer(backgroundLayer);
 }
 
-function setupEntities(level: Level, levelSpec: LevelMap, entityFactory: EntityFactory): void {
+function setupEntities(
+    level: Level,
+    levelSpec: LevelMap,
+    entityFactory: EntityFactory
+): void {
     const spriteLayer = createSpriteLayer(level.entities);
     level.compositor.addLayer(spriteLayer);
 
-    levelSpec.entities.forEach(entitySpec => {
+    levelSpec.entities.forEach((entitySpec) => {
         const entity = entityFactory[entitySpec.name]();
         entity.position.set(entitySpec.position[0], entitySpec.position[1]);
         level.entities.add(entity);
-    })
+    });
 }
