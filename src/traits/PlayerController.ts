@@ -3,33 +3,18 @@ import { GameContext } from "../interface";
 import Level from "../Level";
 import { Vector } from "../vectors";
 import Killable from "./Killable";
-import Stomper from "./Stomper";
 import Trait from "./Trait";
 
 export default class PlayerController extends Trait {
     private _player?: Entity;
     private _checkpoint = new Vector(0, 0);
-    private _time = 300;
-    private _score = 0;
-
-    public get score(): number {
-        return this._score;
-    }
-
-    public get time(): number {
-        return this._time;
-    }
 
     constructor() {
         super('playerController');
     }
 
     public setPlayer(entity: Entity): void {
-        this._player = entity;
-        this.listen(Stomper.EVENT_STOMP, () => {
-            this._score += 100;
-        })
-        
+        this._player = entity;        
     }
 
     public setCheckpoint(x: number, y: number): void {
@@ -42,8 +27,6 @@ export default class PlayerController extends Trait {
             killableTrait.revive();
             this._player.position.set(this._checkpoint.x, this._checkpoint.y);
             level.entities.add(this._player);
-        } else {
-            this._time -= gameContext.deltaTime;
         }
     }
 }

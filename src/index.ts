@@ -29,11 +29,11 @@ async function main(): Promise<void> {
     const level = await loadLevel("1");
 
     const camera = new Camera();
-    const mario = createPlayer(entityFactory["mario"]());
+    const mario = createPlayer(entityFactory["mario"](), "MARIO");
 
     const playerEnv = createPlayerEnv(mario);
     level.entities.add(playerEnv);
-    level.compositor.addLayer(createDashboardLayer(font, playerEnv));
+    level.compositor.addLayer(createDashboardLayer(font, level));
 
     const input = setupKeyboard(mario);
     input.listenTo();

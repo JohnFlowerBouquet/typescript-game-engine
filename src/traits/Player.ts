@@ -3,14 +3,30 @@ import Stomper from "./Stomper";
 import Trait from "./Trait";
 
 export default class Player extends Trait {
-    public lives = 3;
-    public score = 0;
-    public coins = 0;
+    private _lives = 3;
+    private _score = 0;
+    private _coins = 0;
+
+    public get lives(): number {
+        return this._lives;
+    }
+
+    public get score(): number {
+        return this._score;
+    }
+
+    public get coins(): number {
+        return this._coins;
+    }
+
+    public get playerName(): string {
+        return this._playerName;
+    }
     
-    constructor() {
+    constructor(private _playerName = "") {
         super('player');
         this.listen(Stomper.EVENT_STOMP, () => {
-            this.score += 100;
+            this._score += 100;
         });
     }
 }

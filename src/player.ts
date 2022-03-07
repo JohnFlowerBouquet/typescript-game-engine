@@ -14,8 +14,8 @@ export function createPlayerEnv(playerEntity: Entity): Entity {
     return playerEnv;
 }
 
-export function createPlayer(entity: Entity): Entity {
-    entity.addTrait(new Player());
+export function createPlayer(entity: Entity, playerName: string): Entity {
+    entity.addTrait(new Player(playerName));
     return entity;
 }
 
