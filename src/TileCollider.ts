@@ -4,6 +4,7 @@ import Level from "./Level";
 import Matrix from "./Matrix";
 import TileResolver from "./TileResolver";
 import { bricks } from "./tiles/brick";
+import { coin } from "./tiles/coin";
 import { ground } from "./tiles/ground";
 import { TileCollisionHandler } from "./tiles/tileCollisionHandler.interface";
 
@@ -11,7 +12,8 @@ const colliders = new Set<string>(["ground", "bricks", "block", "question", "pip
 
 const handlers: {[key: string]: TileCollisionHandler[]} = {
     ground,
-    bricks
+    bricks,
+    coin
 }
 
 export default class TileCollider {
