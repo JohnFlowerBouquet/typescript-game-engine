@@ -29,4 +29,8 @@ export default class Player extends Trait {
             this._score += 100;
         });
     }
+
+    public addCoins(count: number): void {
+        this._coins += count;
+    }
 }
