@@ -32,5 +32,14 @@ export default class Player extends Trait {
 
     public addCoins(count: number): void {
         this._coins += count;
+        if (this._coins >= 100) {
+            const lifeCount = Math.floor(this._coins / 100);
+            this.addLives(lifeCount);
+            this._coins = this._coins % 100;
+        }
+    }
+
+    public addLives(count: number): void {
+        this._lives += count;
     }
 }

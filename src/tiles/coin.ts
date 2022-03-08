@@ -8,6 +8,7 @@ function handle(entity: Entity, match: TileWithIndex, tileResolver: TileResolver
     const playerTrait = entity.trait("player") as Player;
     if (playerTrait) {
         playerTrait.addCoins(1);
+        entity.playSound("coin");
         const grid = tileResolver.matrix;
         grid.remove(match.indexX, match.indexY);
     }

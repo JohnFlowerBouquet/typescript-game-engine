@@ -14,8 +14,8 @@ export default class MusicPlayer {
         const track = this.tracks.get(name);
         if (track) {
             track.playbackRate = playBackRate;
-            track.play();
             track.muted = false;
+            track.play();
             return track;
         }
     }
