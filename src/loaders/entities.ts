@@ -21,7 +21,7 @@ export function loadEntities(audioContext: AudioContext): Promise<EntityFactory>
         loadGoomba().then(addAs("goomba")),
         loadKoopa().then(addAs("koopa")),
         loadBullet().then(addAs("bullet")),
-        loadCannon(audioContext, entityFactories).then(addAs("cannon"))
+        loadCannon(audioContext).then(addAs("cannon"))
     ])
     .then(() => entityFactories);
 }

@@ -1,8 +1,8 @@
 import AudioBoard from "../AudioBoard";
 import Entity from "../Entity";
+import { GameContext } from "../interface";
 import Level from "../Level";
 import { loadAudioBoard } from "../loaders/audio";
-import { EntityFactory } from "../loaders/entities";
 import { findPlayers } from "../player";
 import SpriteSheet from "../SpriteSheet";
 import Emitter from "../traits/Emitter";
@@ -10,19 +10,17 @@ import Emitter from "../traits/Emitter";
 const HOLD_FIRE_THRESHOLD = 30;
 
 export function loadCannon(
-    audioContext: AudioContext,
-    entityFactory: EntityFactory
+    audioContext: AudioContext
 ): Promise<() => Entity> {
     return loadAudioBoard("cannon", audioContext).then((audioBoard) =>
-        createCannonFactory(audioBoard, entityFactory)
+        createCannonFactory(audioBoard)
     );
 }
 
 function createCannonFactory(
-    audioBoard: AudioBoard,
-    entityFactory: EntityFactory
+    audioBoard: AudioBoard
 ): () => Entity {
-    function emitBullet(entity: Entity, level: Level): void {
+    function emitBullet(entity: Entity, gameContext: GameContext, level: Level): void {
         let direction = 1;
         for (const player of findPlayers(level)) {
             if (
@@ -37,7 +35,7 @@ function createCannonFactory(
             }
         }
         entity.playSound("thwomp");
-        const bullet = entityFactory["bullet"]();
+        const bullet = gameContext.entityFactory["bullet"]();
         bullet.velocity.set(40 * direction, 0);
         level.entities.add(bullet);
         bullet.position.set(entity.position.x + 16, entity.position.y);

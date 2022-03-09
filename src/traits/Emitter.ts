@@ -3,7 +3,7 @@ import { GameContext } from "../interface";
 import Level from "../Level";
 import Trait from "./Trait";
 
-type EmitterFunc = (entity: Entity, level: Level) => void;
+type EmitterFunc = (entity: Entity, gameContext: GameContext, level: Level) => void;
 
 export default class Emitter extends Trait {
     private _interval = 2;
@@ -18,14 +18,14 @@ export default class Emitter extends Trait {
         this._emitters.push(emitter);
     }
 
-    public emit(entity: Entity, level: Level): void {
-        this._emitters.forEach(emitter => emitter(entity, level))
+    public emit(entity: Entity, gameContext: GameContext, level: Level): void {
+        this._emitters.forEach(emitter => emitter(entity, gameContext, level))
     }
 
     public update(entity: Entity, gameContext: GameContext, level: Level): void {
         this._coolDown -= gameContext.deltaTime;
         if (this._coolDown <= 0) {
-            this.emit(entity, level);
+            this.emit(entity, gameContext, level);
             this._coolDown = this._interval;
         }
     }
