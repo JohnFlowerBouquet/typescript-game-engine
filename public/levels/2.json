@@ -1,0 +1,23 @@
+{
+    "spriteSheet": "underworld",
+    "musicSheet": "underworld",
+    "map": [
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["sky","sky","sky","sky","sky","sky","sky","sky","sky","sky", "sky","sky","sky","sky","sky","sky","sky","sky"],
+        ["ground","ground","ground","ground","ground","ground","ground","ground","ground","ground", "ground","ground","ground","ground","ground","ground","ground","ground"]
+    ],
+    "entities": []
+}
