@@ -1,12 +1,8 @@
-import Camera from "./Camera";
 import { setupKeyboard } from "./input";
 import { createLevelLoader } from "./loaders/level";
 import Timer from "./Timer";
-import { setupMouseControl } from "./utils/debug";
 import { getCanvasWithContext } from "./utils/getCanvasWithContext";
 import { loadEntities } from "./loaders/entities";
-import { createCollisionLayer } from "./layers/collision";
-import { createCameraLayer } from "./layers/camera";
 import { loadFont } from "./font";
 import { createDashboardLayer } from "./layers/dashboard";
 import { GameContext } from "./interface";
@@ -26,9 +22,8 @@ async function main(): Promise<void> {
     const font = await loadFont();
 
     const loadLevel = createLevelLoader(entityFactory);
-    const level = await loadLevel("1");
+    const level = await loadLevel("2");
 
-    const camera = new Camera();
     const mario = createPlayer(entityFactory["mario"](), "MARIO");
 
     const playerEnv = createPlayerEnv(mario);
@@ -39,14 +34,15 @@ async function main(): Promise<void> {
     input.listenTo();
 
     if (process.env.NODE_ENV !== "production") {
-        setupMouseControl(canvas, mario, camera);
-        level.compositor.addLayer(createCollisionLayer(level));
-        level.compositor.addLayer(createCameraLayer(camera));
+        // setupMouseControl(canvas, mario, camera);
+        // level.compositor.addLayer(createCollisionLayer(level));
+        // level.compositor.addLayer(createCameraLayer(camera));
     }
 
     const gameContext: GameContext = {
         deltaTime: 0,
         audioContext,
+        videoContext: context,
         entityFactory
     };
 
@@ -55,10 +51,7 @@ async function main(): Promise<void> {
 
         gameContext.deltaTime = deltaTime;
         level.update(gameContext);
-
-        level.compositor.draw(context, camera);
-
-        camera.position.x = Math.max(0, mario.position.x - 100);
+        level.draw(gameContext);
     };
 
     timer.start();

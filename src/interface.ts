@@ -14,5 +14,6 @@ export interface Animation {
 export interface GameContext {
     deltaTime: number;
     audioContext: AudioContext;
+    videoContext: CanvasRenderingContext2D;
     entityFactory: EntityFactory;
 }
