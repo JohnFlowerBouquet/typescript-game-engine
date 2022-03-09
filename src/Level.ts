@@ -33,7 +33,7 @@ export default class Level {
         return this._camera;
     }
 
-    constructor(musicPlayer: MusicPlayer) {
+    constructor(musicPlayer: MusicPlayer, public readonly name = "") {
         this.musicController = new MusicController(musicPlayer);
         this.compositor = new Compositor();
         this.entities = new Set();

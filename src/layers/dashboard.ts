@@ -36,7 +36,7 @@ export function createDashboardLayer(font: Font, level: Level): Layer {
             font.print("x" + playerTrait.coins.toString().padStart(2, '0'), context, 96, LINE2);
 
             font.print("WORLD", context, 152, LINE1);
-            font.print("1-1", context, 160, LINE2);
+            font.print(`1-${level.name}`, context, 160, LINE2);
 
             font.print("TIME", context, 208, LINE1);
             

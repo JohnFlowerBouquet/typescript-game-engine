@@ -61,7 +61,7 @@ export function createLevelLoader(
                 ])
             )
             .then(([levelSpec, backgroundSprites, musicPlayer]) => {
-                const level = new Level(musicPlayer);
+                const level = new Level(musicPlayer, name);
 
                 createTiles(level, levelSpec.map);
 
