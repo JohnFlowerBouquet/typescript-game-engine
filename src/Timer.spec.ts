@@ -34,6 +34,7 @@ function setupRAFForOneCall(timeAmount: number) {
     jest.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
         if (!calledRAFOnce) {
             calledRAFOnce = true;
+            cb(0.001); // Perform first dry run to set lastTime
             cb(timeAmount);
         }
         return 0;
