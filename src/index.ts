@@ -30,8 +30,8 @@ async function main(): Promise<void> {
     level.entities.add(playerEnv);
     level.compositor.addLayer(createDashboardLayer(font, level));
 
-    const input = setupKeyboard(mario);
-    input.listenTo();
+    const inputRouter = setupKeyboard(window);
+    inputRouter.addReceiver(mario);
 
     if (process.env.NODE_ENV !== "production") {
         // setupMouseControl(canvas, mario, camera);

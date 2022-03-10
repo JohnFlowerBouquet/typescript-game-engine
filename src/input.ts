@@ -1,40 +1,42 @@
-import Entity from "./Entity";
+import InputRouter from "./InputRouter";
 import Keyboard, { KeyState } from "./KeyboardState";
 import Walk from "./traits/Walk";
 
-export function setupKeyboard(entity: Entity): Keyboard {
+export function setupKeyboard(window: Window): InputRouter {
     const input = new Keyboard();
+    const router = new InputRouter();
+    input.listenTo(window);
 
     input.addMaping("Space", (keyState: KeyState) => {
         if (keyState === KeyState.pressed) {
-            entity.trait("jump").start();
+            router.route(entity => entity.trait("jump").start());
         }
     });
 
     input.addMaping("ArrowLeft", (keyState) => {
         if (keyState === KeyState.pressed) {
-            entity.trait("walk").start(-1);
+            router.route(entity => entity.trait("walk").start(-1));
         } else {
-            entity.trait("walk").start(1);
+            router.route(entity => entity.trait("walk").start(1));
         }
         
     });
 
     input.addMaping("ArrowRight", (keyState) => {
         if (keyState === KeyState.pressed) {
-            entity.trait("walk").start(1);
+            router.route(entity => entity.trait("walk").start(1));
         } else {
-            entity.trait("walk").start(-1);
+            router.route(entity => entity.trait("walk").start(-1));
         }
     });
 
     input.addMaping("ShiftLeft", (keyState: KeyState) => {
         if (keyState === KeyState.pressed) {
-           (entity.trait("walk") as Walk).sprint(true);
+           (router.route(entity => (entity.trait("walk") as Walk).sprint(true)));
         } else {
-            (entity.trait("walk") as Walk).sprint(false);
+            (router.route(entity => (entity.trait("walk") as Walk).sprint(false)));
         }
     });
 
-    return input;
+    return router;
 }

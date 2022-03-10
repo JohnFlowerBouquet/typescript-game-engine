@@ -33,7 +33,7 @@ export default class Keyboard {
         callback && callback(keyState);
     }
 
-    public listenTo(): void {
+    public listenTo(window: Window): void {
         window.addEventListener('keydown', (event) => {
             this.handleEvent(event);
         });
