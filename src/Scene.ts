@@ -22,4 +22,8 @@ export default class Scene {
     public draw(gameContext: GameContext): void {
         this.compositor.draw(gameContext.videoContext, this.camera);
     }
+
+    public pause(): void {
+        //
+    }
 }

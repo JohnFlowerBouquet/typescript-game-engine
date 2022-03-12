@@ -10,7 +10,8 @@ export default class MusicPlayer {
     }
 
     public playTrack(name: string, playBackRate: number): HTMLAudioElement | undefined {
-        this.tracks.forEach(track => track.pause());
+        this.pauseAll();
+        
         const track = this.tracks.get(name);
         if (track) {
             track.playbackRate = playBackRate;
@@ -18,5 +19,9 @@ export default class MusicPlayer {
             track.play();
             return track;
         }
+    }
+
+    public pauseAll(): void {
+        this.tracks.forEach(track => track.pause());
     }
 }

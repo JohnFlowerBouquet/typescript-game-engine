@@ -1,8 +1,5 @@
-import Camera from "./Camera";
-import Compositor from "./Compositor";
 import Entity from "./Entity";
 import EntityCollider from "./EntityCollider";
-import EventEmitter from "./EventEmitter";
 import { GameContext } from "./interface";
 import Matrix from "./Matrix";
 import MusicController from "./MusicController";
@@ -50,5 +47,9 @@ export default class Level extends Scene {
         focusPlayer(this);
         
         this.totalTime += gameContext.deltaTime;
+    }
+
+    public pause(): void {
+        this.musicController.pauseAll();
     }
 }
