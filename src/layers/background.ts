@@ -47,6 +47,6 @@ export function createBackgroundLayer(
         const drawTo = drawFrom + drawWidth;
         reDraw(drawFrom, drawTo);
 
-        contextParam.drawImage(canvas, -camera.position.x % 16, -camera.position.y);
+        contextParam.drawImage(canvas, Math.floor(-camera.position.x % 16), Math.floor(-camera.position.y));
     }
 }

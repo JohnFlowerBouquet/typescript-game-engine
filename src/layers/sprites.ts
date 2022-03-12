@@ -17,8 +17,8 @@ export function createSpriteLayer(
             entity.draw(spriteBufferContext);
             context.drawImage(
                 spriteBuffer,
-                entity.position.x - camera.position.x,
-                entity.position.y - camera.position.y
+                Math.floor(entity.position.x - camera.position.x),
+                Math.floor(entity.position.y - camera.position.y)
             );
         });
 }
