@@ -11,8 +11,10 @@ export default class Stomper extends Trait {
     }
 
     public collides(entity: Entity, collidingEntity: Entity): void {
-        const killableTrait = collidingEntity.trait("killable") as Killable;
-        if (!killableTrait || killableTrait.isDead ) {
+        if (collidingEntity.hasTrait("killeable")) {
+            const killableTrait = collidingEntity.trait("killable") as Killable;
+            if (killableTrait.isDead) return;
+        } else {
             return;
         }
 

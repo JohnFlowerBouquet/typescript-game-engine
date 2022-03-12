@@ -32,5 +32,12 @@
             "name": "cannon",
             "position": [224, 128]
         }
+    ],
+    "triggers": [
+        {
+            "type": "goto",
+            "name": "2",
+            "position": [80, 64]
+        }
     ]
 }

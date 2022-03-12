@@ -59,7 +59,6 @@ function createMarioFactory(sprite: SpriteSheet, audioBoard: AudioBoard): () => 
         mario.addTrait(new Jump());
         mario.addTrait(new Stomper());
         mario.addTrait(new Killable())
-        mario.position.set(64, 64);
 
     return mario;
     }

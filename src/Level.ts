@@ -15,6 +15,8 @@ function focusPlayer(level: Level) {
 }
 
 export default class Level extends Scene {
+    public static EVENT_TRIGGER = Symbol("trigger");
+    
     public entities: Set<Entity>;
     public tiles: Matrix;
     public tileCollider: TileCollider;
