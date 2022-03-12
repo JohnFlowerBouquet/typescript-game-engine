@@ -8,6 +8,7 @@ import Matrix from "./Matrix";
 import MusicController from "./MusicController";
 import MusicPlayer from "./MusicPlayer";
 import { findPlayers } from "./player";
+import Scene from "./Scene";
 import TileCollider from "./TileCollider";
 
 function focusPlayer(level: Level) {
@@ -16,26 +17,19 @@ function focusPlayer(level: Level) {
     }
 }
 
-export default class Level {
-    public compositor: Compositor;
+export default class Level extends Scene {
     public entities: Set<Entity>;
     public tiles: Matrix;
     public tileCollider: TileCollider;
     public gravity = 1500;
     public totalTime = 0;
     public readonly musicController: MusicController;
-    public readonly events = new EventEmitter();
 
     private _entityCollider: EntityCollider;
-    private readonly _camera = new Camera();
-
-    public get camera() {
-        return this._camera;
-    }
 
     constructor(musicPlayer: MusicPlayer, public readonly name = "") {
+        super();
         this.musicController = new MusicController(musicPlayer);
-        this.compositor = new Compositor();
         this.entities = new Set();
         this.tiles = new Matrix();
         this.tileCollider = new TileCollider(this.tiles);
@@ -56,9 +50,5 @@ export default class Level {
         focusPlayer(this);
         
         this.totalTime += gameContext.deltaTime;
-    }
-
-    public draw(gameContext: GameContext): void {
-        this.compositor.draw(gameContext.videoContext, this.camera);
     }
 }

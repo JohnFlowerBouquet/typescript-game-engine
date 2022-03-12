@@ -1,8 +1,8 @@
 import { GameContext } from "./interface";
-import Level from "./Level";
+import Scene from "./Scene";
 
 export default class SceneRunner {
-    scenes: Level[] = [];
+    scenes: Scene[] = [];
     sceneIndex = 0;
 
     public update(gameContext: GameContext): void {
@@ -17,7 +17,10 @@ export default class SceneRunner {
         this.sceneIndex++;
     }
 
-    public addScene(scene: Level): void {
+    public addScene(scene: Scene): void {
+        scene.events.listen(Scene.EVENT_COMPLETE, () => {
+            this.runNext();
+        })
         this.scenes.push(scene);
     }
 }

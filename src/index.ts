@@ -8,6 +8,9 @@ import { createDashboardLayer } from "./layers/dashboard";
 import { GameContext } from "./interface";
 import { createPlayer, createPlayerEnv } from "./player";
 import SceneRunner from "./SceneRunner";
+import { createPlayerProgerssLayer } from "./layers/player-progress";
+import CompositionScene from "./CompositionScene";
+import Scene from "./Scene";
 
 export const CANVAS_WIDTH = 256 + 16;
 export const CANVAS_HEIGHT = 256;
@@ -25,16 +28,26 @@ async function main(): Promise<void> {
 
     const loadLevel = createLevelLoader(entityFactory);
     const level = await loadLevel("2");
-    sceneRunnder.addScene(level);
 
     const mario = createPlayer(entityFactory["mario"](), "MARIO");
-
     const playerEnv = createPlayerEnv(mario);
     level.entities.add(playerEnv);
-    level.compositor.addLayer(createDashboardLayer(font, level));
-
+    level.entities.add(mario);
     const inputRouter = setupKeyboard(window);
-    inputRouter.addReceiver(mario);
+    inputRouter.addReceiver(mario);   
+    
+    const playerProgressLayer = createPlayerProgerssLayer(font, level);
+    const dashboardLayer = createDashboardLayer(font, level);
+
+    const waitScreen = new CompositionScene();
+    waitScreen.compositor.addLayer(dashboardLayer);
+    waitScreen.compositor.addLayer(playerProgressLayer);
+
+    sceneRunnder.addScene(waitScreen);
+
+    sceneRunnder.addScene(level);
+
+    level.compositor.addLayer(dashboardLayer);
 
     if (process.env.NODE_ENV !== "production") {
         // setupMouseControl(canvas, mario, camera);

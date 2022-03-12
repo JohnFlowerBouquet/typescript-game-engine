@@ -30,6 +30,7 @@ export function createDashboardLayer(font: Font, level: Level): Layer {
         const levelTimerTrait = getLevelTimerTrait(level);
 
         if (playerTrait && levelTimerTrait) {
+
             font.print(playerTrait.playerName, context, 16, LINE1);
             font.print(playerTrait.score.toString().padStart(6, '0'), context, 16, LINE2);
 
