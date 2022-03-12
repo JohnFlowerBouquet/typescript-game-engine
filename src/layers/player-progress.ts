@@ -20,12 +20,7 @@ export function createPlayerProgerssLayer(font: Font, level: Level): Layer {
     return (context: CanvasRenderingContext2D, camera: Camera) => {
         const player = getPlayer(level);
 
-        if (player) {
-            context.globalCompositeOperation = 'destination-over';
-            context.fillStyle = "black";
-            context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-            context.globalCompositeOperation = 'source-over';
-            
+        if (player) {           
             const playerTrait = player.trait("player") as Player
             font.print(`WORLD 1-${level.name}`, context, size * 12, size * 12);
 
