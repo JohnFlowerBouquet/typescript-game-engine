@@ -139,7 +139,6 @@ function setupTriggers(level: Level, levelSpec: LevelMap): void {
         const trigger = createTrigger();
         const triggerTrait = trigger.trait("trigger") as Trigger;
         const condition: Condition = (trigger, collidingEntities, gameContext, level) => {
-            console.log("EMIT");
             level.events.emit(Level.EVENT_TRIGGER, triggerSpec, trigger, collidingEntities);
         }
         trigger.size.set(32, 32);
