@@ -1,23 +1,21 @@
-import CompositionScene from "../../../src/CompositionScene";
 import Entity from "../../../src/Entity";
 import { loadFont } from "../../../src/font";
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../../src/index";
 import { setupKeyboard } from "../../../src/input";
 import { GameContext } from "../../../src/interface";
 import { createCollisionLayer } from "../../../src/layers/collision";
-import { createColorLayer } from "../../../src/layers/color";
 import { createDashboardLayer } from "../../../src/layers/dashboard";
 import { createPlayerProgerssLayer } from "../../../src/layers/player-progress";
-import { createTextLayer } from "../../../src/layers/text";
 import Level from "../../../src/Level";
 import { loadEntities } from "../../../src/loaders/entities";
 import { createLevelLoader, TriggerSpec } from "../../../src/loaders/level";
 import { createPlayer, createPlayerEnv } from "../../../src/player";
-import Scene from "../../../src/Scene";
 import SceneRunner from "../../../src/SceneRunner";
 import Timer from "../../../src/Timer";
 import Trigger from "../../../src/traits/Trigger";
 import { getCanvasWithContext } from "../../../src/utils/getCanvasWithContext";
+import { LoadScreen } from "./Scenes/LoadScreen";
+import { WaitingScreen } from "./Scenes/WaitingScreen";
 
 async function main(): Promise<void> {
     const { canvas, context } = getCanvasWithContext(
@@ -37,9 +35,8 @@ async function main(): Promise<void> {
     inputRouter.addReceiver(mario);
 
     async function runLevel(name: string) {
-        const loadScreen = new Scene();
-        loadScreen.compositor.addLayer(createColorLayer("#000"));
-        loadScreen.compositor.addLayer(createTextLayer(font, `Loading ${name}`))
+        
+        const loadScreen = LoadScreen(font, name);
         sceneRunnder.addScene(loadScreen);
         sceneRunnder.runNext();
 
@@ -56,9 +53,7 @@ async function main(): Promise<void> {
             }
         }
         level.events.listen(Level.EVENT_TRIGGER, triggerCallback);
-
-        const playerProgressLayer = createPlayerProgerssLayer(font, level);
-        const dashboardLayer = createDashboardLayer(font, level);
+        
 
         mario.position.set(0, 0);
         level.entities.add(mario);
@@ -66,11 +61,10 @@ async function main(): Promise<void> {
         const playerEnv = createPlayerEnv(mario);
         level.entities.add(playerEnv);
 
-        const waitScreen = new CompositionScene();
-        waitScreen.compositor.addLayer(createColorLayer("#000"));
-        waitScreen.compositor.addLayer(dashboardLayer);
-        waitScreen.compositor.addLayer(playerProgressLayer);
-        sceneRunnder.addScene(waitScreen);
+        const dashboardLayer = createDashboardLayer(font, level);
+        const playerProgressLayer = createPlayerProgerssLayer(font, level);
+        const waitingScreen = WaitingScreen(dashboardLayer, playerProgressLayer);
+        sceneRunnder.addScene(waitingScreen);
 
         level.compositor.addLayer(dashboardLayer);
         sceneRunnder.addScene(level);
