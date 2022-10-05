@@ -2,29 +2,17 @@ import { GameContext } from "./interface";
 import Scene from "./Scene";
 
 export default class SceneRunner {
-    private readonly _scenes: Scene[] = [];
-    private _sceneIndex = 0;
+    private _currentScene!: Scene;
 
     public update(gameContext: GameContext): void {
-        const currentScene = this._scenes[this._sceneIndex];
-        if (currentScene) {
-            currentScene.update(gameContext);
-            currentScene.draw(gameContext);
+        if (this._currentScene) {
+            this._currentScene.update(gameContext);
+            this._currentScene.draw(gameContext);
         }
     }
 
-    public runNext(): void {
-        const currentScene = this._scenes[this._sceneIndex];
-        if (currentScene) {
-            currentScene.pause();
-        }
-        this._sceneIndex++;
-    }
-
-    public addScene(scene: Scene): void {
-        scene.events.listen(Scene.EVENT_COMPLETE, () => {
-            this.runNext();
-        })
-        this._scenes.push(scene);
+    public run(scene: Scene): void {
+        this._currentScene?.pause();
+        this._currentScene = scene;
     }
 }

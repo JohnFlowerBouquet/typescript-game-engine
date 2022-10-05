@@ -1,4 +1,5 @@
 import { EntityFactory } from "./loaders/entities";
+import SceneRunner from "./SceneRunner";
 
 export interface Position {
     x: number,
@@ -16,4 +17,5 @@ export interface GameContext {
     audioContext: AudioContext;
     videoContext: CanvasRenderingContext2D;
     entityFactory: EntityFactory;
+    sceneRunner: SceneRunner;
 }

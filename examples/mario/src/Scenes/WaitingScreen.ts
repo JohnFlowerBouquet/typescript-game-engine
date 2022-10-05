@@ -3,8 +3,8 @@ import { createColorLayer } from "../../../../src/layers/color";
 import { Layer } from "../../../../src/layers/layer.interface";
 import Scene from "../../../../src/Scene";
 
-export const WaitingScreen = (dashboardLayer: Layer, playerProgressLayer: Layer) => {
-    const waitingScreen = new CompositionScene();
+export const WaitingScreen = (dashboardLayer: Layer, playerProgressLayer: Layer, nextScene: Scene) => {
+    const waitingScreen = new CompositionScene(nextScene);
     waitingScreen.compositor.addLayer(createColorLayer("#000"));
     waitingScreen.compositor.addLayer(dashboardLayer);
     waitingScreen.compositor.addLayer(playerProgressLayer);
@@ -14,10 +14,14 @@ export const WaitingScreen = (dashboardLayer: Layer, playerProgressLayer: Layer)
 class CompositionScene extends Scene {
     private _countdown = 2;
 
+    constructor(private readonly _nextScene: Scene) {
+        super();
+    }
+
     public update(gameContext: GameContext): void {
         this._countdown -= gameContext.deltaTime;
         if (this._countdown <= 0) {
-            this.events.emit(Scene.EVENT_COMPLETE);
+            gameContext.sceneRunner.run(this._nextScene);
         }
     }
 }
